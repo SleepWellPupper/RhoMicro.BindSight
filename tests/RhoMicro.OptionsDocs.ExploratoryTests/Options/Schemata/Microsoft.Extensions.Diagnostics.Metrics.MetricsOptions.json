@@ -1,0 +1,54 @@
+{
+  "type": "object",
+  "properties": {
+    "rules": {
+      "type": [
+        "array",
+        "null"
+      ],
+      "items": {
+        "type": "object",
+        "properties": {
+          "meterName": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "instrumentName": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "listenerName": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "scopes": {
+            "enum": [
+              "None",
+              "Global",
+              "Local",
+              0,
+              1,
+              2
+            ]
+          },
+          "enable": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "meterName",
+          "instrumentName",
+          "listenerName",
+          "scopes",
+          "enable"
+        ]
+      }
+    }
+  }
+}

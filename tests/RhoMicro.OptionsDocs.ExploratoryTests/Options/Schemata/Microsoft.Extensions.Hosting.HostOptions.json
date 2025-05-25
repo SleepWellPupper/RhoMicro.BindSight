@@ -1,0 +1,29 @@
+{
+  "type": "object",
+  "properties": {
+    "shutdownTimeout": {
+      "$comment": "Represents a System.TimeSpan value.",
+      "type": "string",
+      "pattern": "^-?(\\d\u002B\\.)?\\d{2}:\\d{2}:\\d{2}(\\.\\d{1,7})?$"
+    },
+    "startupTimeout": {
+      "$comment": "Represents a System.TimeSpan value.",
+      "type": "string",
+      "pattern": "^-?(\\d\u002B\\.)?\\d{2}:\\d{2}:\\d{2}(\\.\\d{1,7})?$"
+    },
+    "servicesStartConcurrently": {
+      "type": "boolean"
+    },
+    "servicesStopConcurrently": {
+      "type": "boolean"
+    },
+    "backgroundServiceExceptionBehavior": {
+      "enum": [
+        "StopHost",
+        "Ignore",
+        0,
+        1
+      ]
+    }
+  }
+}

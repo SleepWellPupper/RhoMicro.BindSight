@@ -1,0 +1,24 @@
+{
+  "type": "object",
+  "properties": {
+    "exitMode": {
+      "description": "Sets the exit mode after running all options docs generators. The default is \u0060ExitMode.Environment\u0060.",
+      "enum": [
+        "None",
+        "Host",
+        "Environment",
+        0,
+        1,
+        2
+      ]
+    },
+    "exitOnCancellation": {
+      "type": "boolean",
+      "description": "If set to \u0060true\u0060, the options docs runner will exit after receiving cancellation. The default is \u0060true\u0060."
+    },
+    "run": {
+      "type": "boolean",
+      "description": "If set to \u0060true\u0060, the options docs runner will run. The default is \u0060false\u0060."
+    }
+  }
+}

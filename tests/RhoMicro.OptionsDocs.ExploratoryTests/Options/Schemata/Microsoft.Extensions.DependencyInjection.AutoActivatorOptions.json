@@ -1,0 +1,24 @@
+{
+  "type": "object",
+  "properties": {
+    "autoActivators": {
+      "type": [
+        "array",
+        "null"
+      ],
+      "items": {
+        "$comment": "Unsupported .NET type",
+        "not": true
+      }
+    },
+    "keyedAutoActivators": {
+      "type": [
+        "array",
+        "null"
+      ],
+      "items": {
+        "type": "object"
+      }
+    }
+  }
+}

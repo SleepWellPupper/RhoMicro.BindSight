@@ -1,0 +1,30 @@
+{
+  "type": "object",
+  "properties": {
+    "colorBehavior": {
+      "enum": [
+        "Default",
+        "Enabled",
+        "Disabled",
+        0,
+        1,
+        2
+      ]
+    },
+    "singleLine": {
+      "type": "boolean"
+    },
+    "includeScopes": {
+      "type": "boolean"
+    },
+    "timestampFormat": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "useUtcTimestamp": {
+      "type": "boolean"
+    }
+  }
+}

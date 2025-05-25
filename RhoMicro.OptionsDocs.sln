@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RhoMicro.OptionsDocs", "src\RhoMicro.OptionsDocs\RhoMicro.OptionsDocs.csproj", "{293AF8E4-B5CD-4062-BA26-756A5F5890FD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RhoMicro.OptionsDocs.ExploratoryTests", "tests\RhoMicro.OptionsDocs.ExploratoryTests\RhoMicro.OptionsDocs.ExploratoryTests.csproj", "{B0BD5335-2C97-454B-9EF2-585AB39EC3D2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RhoMicro.OptionsDocs.Tests", "tests\RhoMicro.OptionsDocs.Tests\RhoMicro.OptionsDocs.Tests.csproj", "{771BEB37-1F48-40D1-BFF4-2DB83CC2A127}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{293AF8E4-B5CD-4062-BA26-756A5F5890FD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{293AF8E4-B5CD-4062-BA26-756A5F5890FD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{293AF8E4-B5CD-4062-BA26-756A5F5890FD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{293AF8E4-B5CD-4062-BA26-756A5F5890FD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B0BD5335-2C97-454B-9EF2-585AB39EC3D2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B0BD5335-2C97-454B-9EF2-585AB39EC3D2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B0BD5335-2C97-454B-9EF2-585AB39EC3D2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B0BD5335-2C97-454B-9EF2-585AB39EC3D2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{771BEB37-1F48-40D1-BFF4-2DB83CC2A127}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{771BEB37-1F48-40D1-BFF4-2DB83CC2A127}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{771BEB37-1F48-40D1-BFF4-2DB83CC2A127}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{771BEB37-1F48-40D1-BFF4-2DB83CC2A127}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

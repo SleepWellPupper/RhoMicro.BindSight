@@ -1,0 +1,15 @@
+{
+  "type": "object",
+  "properties": {
+    "eventHandlers": {
+      "type": [
+        "array",
+        "null"
+      ],
+      "items": {
+        "$comment": "Unsupported .NET type",
+        "not": true
+      }
+    }
+  }
+}

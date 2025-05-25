@@ -1,0 +1,213 @@
+{
+  "type": "object",
+  "properties": {
+    "outputDirectory": {
+      "type": "string",
+      "description": "Sets the directory to generate json schemata of options into."
+    },
+    "jsonSerializerOptions": {
+      "type": "object",
+      "properties": {
+        "converters": {
+          "type": [
+            "array",
+            "null"
+          ],
+          "items": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "$comment": "Unsupported .NET type",
+                "not": true
+              }
+            }
+          }
+        },
+        "typeInfoResolver": {
+          "type": [
+            "object",
+            "null"
+          ]
+        },
+        "typeInfoResolverChain": {
+          "type": [
+            "array",
+            "null"
+          ],
+          "items": {
+            "type": "object"
+          }
+        },
+        "allowOutOfOrderMetadataProperties": {
+          "type": "boolean"
+        },
+        "allowTrailingCommas": {
+          "type": "boolean"
+        },
+        "defaultBufferSize": {
+          "type": [
+            "string",
+            "integer"
+          ],
+          "pattern": "^-?(?:0|[1-9]\\d*)$"
+        },
+        "encoder": {
+          "type": [
+            "object",
+            "null"
+          ],
+          "properties": {
+            "maxOutputCharactersPerInputCharacter": {
+              "type": [
+                "string",
+                "integer"
+              ],
+              "pattern": "^-?(?:0|[1-9]\\d*)$"
+            }
+          }
+        },
+        "dictionaryKeyPolicy": {
+          "type": [
+            "object",
+            "null"
+          ]
+        },
+        "ignoreNullValues": {
+          "type": "boolean"
+        },
+        "defaultIgnoreCondition": {
+          "enum": [
+            "Never",
+            "Always",
+            "WhenWritingDefault",
+            "WhenWritingNull",
+            "WhenWriting",
+            "WhenReading",
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ]
+        },
+        "numberHandling": {
+          "enum": [
+            "Strict",
+            "AllowReadingFromString",
+            "WriteAsString",
+            "AllowNamedFloatingPointLiterals",
+            0,
+            1,
+            2,
+            4
+          ]
+        },
+        "preferredObjectCreationHandling": {
+          "enum": [
+            "Replace",
+            "Populate",
+            0,
+            1
+          ]
+        },
+        "ignoreReadOnlyProperties": {
+          "type": "boolean"
+        },
+        "ignoreReadOnlyFields": {
+          "type": "boolean"
+        },
+        "includeFields": {
+          "type": "boolean"
+        },
+        "maxDepth": {
+          "type": [
+            "string",
+            "integer"
+          ],
+          "pattern": "^-?(?:0|[1-9]\\d*)$"
+        },
+        "propertyNamingPolicy": {
+          "type": [
+            "object",
+            "null"
+          ]
+        },
+        "propertyNameCaseInsensitive": {
+          "type": "boolean"
+        },
+        "readCommentHandling": {
+          "enum": [
+            "Disallow",
+            "Skip",
+            "Allow",
+            0,
+            1,
+            2
+          ]
+        },
+        "unknownTypeHandling": {
+          "enum": [
+            "JsonElement",
+            "JsonNode",
+            0,
+            1
+          ]
+        },
+        "unmappedMemberHandling": {
+          "enum": [
+            "Skip",
+            "Disallow",
+            0,
+            1
+          ]
+        },
+        "writeIndented": {
+          "type": "boolean"
+        },
+        "indentCharacter": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 1
+        },
+        "indentSize": {
+          "type": [
+            "string",
+            "integer"
+          ],
+          "pattern": "^-?(?:0|[1-9]\\d*)$"
+        },
+        "referenceHandler": {
+          "type": [
+            "object",
+            "null"
+          ]
+        },
+        "newLine": {
+          "type": "string"
+        },
+        "respectNullableAnnotations": {
+          "type": "boolean"
+        },
+        "respectRequiredConstructorParameters": {
+          "type": "boolean"
+        },
+        "isReadOnly": {
+          "type": "boolean"
+        }
+      }
+    },
+    "jsonSchemaExporterOptions": {
+      "type": "object",
+      "properties": {
+        "treatNullObliviousAsNonNullable": {
+          "type": "boolean"
+        },
+        "transformSchemaNode": {
+          "$comment": "Unsupported .NET type",
+          "not": true
+        }
+      }
+    }
+  }
+}

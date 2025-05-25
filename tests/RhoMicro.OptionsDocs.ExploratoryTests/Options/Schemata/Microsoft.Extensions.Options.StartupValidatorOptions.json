@@ -1,0 +1,15 @@
+{
+  "type": "object",
+  "properties": {
+    "_validators": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "additionalProperties": {
+        "$comment": "Unsupported .NET type",
+        "not": true
+      }
+    }
+  }
+}

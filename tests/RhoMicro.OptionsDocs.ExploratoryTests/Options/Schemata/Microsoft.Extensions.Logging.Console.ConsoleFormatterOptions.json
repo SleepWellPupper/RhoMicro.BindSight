@@ -1,0 +1,17 @@
+{
+  "type": "object",
+  "properties": {
+    "includeScopes": {
+      "type": "boolean"
+    },
+    "timestampFormat": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "useUtcTimestamp": {
+      "type": "boolean"
+    }
+  }
+}

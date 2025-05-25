@@ -1,0 +1,25 @@
+{
+  "type": "object",
+  "properties": {
+    "activityTrackingOptions": {
+      "enum": [
+        "None",
+        "SpanId",
+        "TraceId",
+        "ParentId",
+        "TraceState",
+        "TraceFlags",
+        "Tags",
+        "Baggage",
+        0,
+        1,
+        2,
+        4,
+        8,
+        16,
+        32,
+        64
+      ]
+    }
+  }
+}

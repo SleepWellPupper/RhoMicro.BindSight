@@ -1,0 +1,65 @@
+{
+  "type": "object",
+  "properties": {
+    "jsonWriterOptions": {
+      "type": "object",
+      "properties": {
+        "encoder": {
+          "type": [
+            "object",
+            "null"
+          ],
+          "properties": {
+            "maxOutputCharactersPerInputCharacter": {
+              "type": [
+                "string",
+                "integer"
+              ],
+              "pattern": "^-?(?:0|[1-9]\\d*)$"
+            }
+          }
+        },
+        "indented": {
+          "type": "boolean"
+        },
+        "indentCharacter": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 1
+        },
+        "indentSize": {
+          "type": [
+            "string",
+            "integer"
+          ],
+          "pattern": "^-?(?:0|[1-9]\\d*)$"
+        },
+        "maxDepth": {
+          "type": [
+            "string",
+            "integer"
+          ],
+          "pattern": "^-?(?:0|[1-9]\\d*)$"
+        },
+        "skipValidation": {
+          "type": "boolean"
+        },
+        "newLine": {
+          "type": "string"
+        }
+      }
+    },
+    "includeScopes": {
+      "type": "boolean"
+    },
+    "timestampFormat": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "useUtcTimestamp": {
+      "type": "boolean"
+    }
+  }
+}
