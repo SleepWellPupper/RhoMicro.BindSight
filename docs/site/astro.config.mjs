@@ -7,12 +7,12 @@ import mdx from '@astrojs/mdx';
 export default defineConfig({
 	integrations: [
 		starlight({
-			title: 'OptionsDocs',
+			title: 'BindSight',
 			social: [
 				{
 					icon: 'github',
 					label: 'GitHub',
-					href: 'https://github.com/sleepwellpupper/RhoMicro.OptionsDocs'
+					href: 'https://github.com/sleepwellpupper/RhoMicro.BindSight'
 				}
 			],
 			sidebar: [

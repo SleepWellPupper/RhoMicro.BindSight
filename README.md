@@ -1,4 +1,4 @@
-# OptionsDocs
+# BindSight
 
 ## TODO
 
@@ -35,7 +35,7 @@
 ### Services
 
 - responsible for integration of various components and services
-- provides top level integration point into DI via `ServiceCollectionExtensions.AddOptionsDocs(this IServiceCollection)`
+- provides top level integration point into DI via `ServiceCollectionExtensions.AddBindSight(this IServiceCollection)`
 
 ### Models
 

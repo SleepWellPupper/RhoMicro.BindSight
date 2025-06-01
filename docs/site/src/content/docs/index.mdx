@@ -1,5 +1,5 @@
 ---
-title: Welcome to RhoMicro OptionsDocs
+title: Welcome to RhoMicro BindSight
 description: Get started building your docs site with Starlight.
 template: splash
 hero:
@@ -25,7 +25,7 @@ import { Card, CardGrid } from '@astrojs/starlight/components';
 		Generate a readme file detailing configuration options to your dotnet application:
 		```cs
 		services
-			.AddOptionsDocs()
+			.AddBindSight()
 			.TransformationPipeline
 			.UseDefaults()
 			.Generators
@@ -36,7 +36,7 @@ import { Card, CardGrid } from '@astrojs/starlight/components';
 		Generate json schemata for configuration options to your dotnet application:
 		```cs
 		services
-			.AddOptionsDocs()
+			.AddBindSight()
 			.TransformationPipeline
 			.UseDefaults()
 			.Generators
@@ -46,11 +46,11 @@ import { Card, CardGrid } from '@astrojs/starlight/components';
 	<Card title="Extensible Modular Architecture" icon="puzzle">
 		Replace, extend, disable any behavior via DI, like the service providing the options to document:
 		```cs
-		services.AddSingleton<IOptionsDocsGeneratorOptionsProvider, CustomOptionsProvider>()
+		services.AddSingleton<IBindSightGeneratorOptionsProvider, CustomOptionsProvider>()
 		```
 	</Card>
 	<Card title="Built with Dependency Injection, for Dependency Injection" icon="star">
-		All setup is done via DI, integrating natively into any dotnet application using the options pattern to bind configuration sources.		
+		All setup is done via DI, integrating natively into any dotnet application using the options pattern to bind configuration sources.
 		The service collection targeted by our extensions will be analyzed for options pattern registrations that are bound against configuration sources.
 	</Card>
 	<Card title="Automatically Run Docs Generators at Application Startup" icon="rocket">
