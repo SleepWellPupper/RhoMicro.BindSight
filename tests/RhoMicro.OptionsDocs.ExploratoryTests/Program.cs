@@ -2,6 +2,7 @@ using Microsoft.Extensions.Options;
 using RhoMicro.HotterReload;
 using RhoMicro.OptionsDocs;
 using RhoMicro.OptionsDocs.ExploratoryTests;
+using RhoMicro.OptionsDocs.Generators;
 using RhoMicro.OptionsDocs.Services;
 using RhoMicro.OptionsDocs.Transformations;
 using HotReloadHandler = RhoMicro.OptionsDocs.ExploratoryTests.HotReloadHandler;
@@ -21,8 +22,14 @@ builder.Services
     .AddHotReload()
     .AddHandler<HotReloadHandler>()
     .Services
+    .AddSingleton<IOptionsDocsGeneratorOptionsProvider, CustomOptionsProvider>()
     .AddDocumentedOptions<TestOptions>("Test")
-    .Services.AddOptionsDocs().Generators.AddLogging();
+    .Services
+    .AddOptionsDocs()
+    .Generators
+    .AddJsonSchemata()
+    .AddReadme()
+    .AddLogging();
 
 var host = builder.Build();
 
