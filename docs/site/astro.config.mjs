@@ -6,7 +6,7 @@ import mdx from '@astrojs/mdx';
 // https://astro.build/config
 export default defineConfig({
 	site: 'https://sleepwellpupper.github.io',
-	base: '/RhoMicro.BindSight',
+	base: '/rhomicro.bindsight',
 	integrations: [
 		starlight({
 			title: 'BindSight',
