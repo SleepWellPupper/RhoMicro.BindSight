@@ -6,6 +6,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RhoMicro.BindSight.Explorat
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RhoMicro.BindSight.Tests", "tests\RhoMicro.BindSight.Tests\RhoMicro.BindSight.Tests.csproj", "{771BEB37-1F48-40D1-BFF4-2DB83CC2A127}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BindSightWalkthrough", "docs\site\src\content\docs\tutorials\tmp\BindSightWalkthrough\BindSightWalkthrough.csproj", "{2F2BDCC8-0D41-4314-94A9-53E4C4AB3650}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -24,5 +26,9 @@ Global
 		{771BEB37-1F48-40D1-BFF4-2DB83CC2A127}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{771BEB37-1F48-40D1-BFF4-2DB83CC2A127}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{771BEB37-1F48-40D1-BFF4-2DB83CC2A127}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2F2BDCC8-0D41-4314-94A9-53E4C4AB3650}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2F2BDCC8-0D41-4314-94A9-53E4C4AB3650}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2F2BDCC8-0D41-4314-94A9-53E4C4AB3650}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2F2BDCC8-0D41-4314-94A9-53E4C4AB3650}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

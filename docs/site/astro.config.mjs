@@ -5,6 +5,7 @@ import mdx from '@astrojs/mdx';
 
 // https://astro.build/config
 export default defineConfig({
+	site:'bindsight.rhomicro.com',
 	integrations: [
 		starlight({
 			title: 'BindSight',
@@ -16,6 +17,10 @@ export default defineConfig({
 				}
 			],
 			sidebar: [
+				{
+					label: 'Tutorials',
+					autogenerate: { directory: 'reference' },
+				},
 				{
 					label: 'Guides',
 					autogenerate: { directory: 'guides' },
