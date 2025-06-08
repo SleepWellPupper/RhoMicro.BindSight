@@ -1,0 +1,13 @@
+{
+  "type": "object",
+  "properties": {
+    "outputFile": {
+      "type": "string",
+      "description": "Sets the path of the readme file to generate options docs into. The default is \u0060Options/Readme.md\u0060."
+    },
+    "title": {
+      "type": "string",
+      "description": "Sets the title of the readme file. The default is \u0060Options\u0060."
+    }
+  }
+}

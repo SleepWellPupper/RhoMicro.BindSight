@@ -1,6 +1,5 @@
 namespace RhoMicro.BindSight.Enrichments;
 
-using System.Diagnostics.CodeAnalysis;
 using Models;
 
 /// <summary>

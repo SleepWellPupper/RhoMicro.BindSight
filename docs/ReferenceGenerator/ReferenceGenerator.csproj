@@ -1,0 +1,27 @@
+<Project Sdk="Microsoft.NET.Sdk.Worker">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <LangVersion>preview</LangVersion>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <UserSecretsId>dotnet-ReferenceGenerator-260f12b9-b11c-4008-9911-80d726efbf9f</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Workspaces" Version="4.14.0"/>
+    <PackageReference Include="Microsoft.CodeAnalysis.Workspaces.MSBuild" Version="4.14.0"/>
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="9.0.3"/>
+    <PackageReference Include="Microsoft.Extensions.Options.DataAnnotations" Version="9.0.5"/>
+    <PackageReference Include="RhoMicro.CodeAnalysis.OptionsGenerator" Version="20.1.5">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="RhoMicro.CodeAnalysis.UtilityGenerators" Version="20.1.5">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="RhoMicro.HotterReload" Version="1.0.2" />
+  </ItemGroup>
+</Project>

@@ -2,7 +2,6 @@ namespace RhoMicro.BindSight.Enrichments;
 
 using System.Collections.Immutable;
 using System.Reflection;
-using System.Text.RegularExpressions;
 using Transformations;
 
 /// <summary>

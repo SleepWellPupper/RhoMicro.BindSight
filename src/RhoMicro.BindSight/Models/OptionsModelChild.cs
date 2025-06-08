@@ -3,7 +3,6 @@ namespace RhoMicro.BindSight.Models;
 using System.Collections.Concurrent;
 using System.Collections.Immutable;
 using System.Reflection;
-using System.Runtime.Intrinsics.X86;
 using Enrichments;
 
 /// <summary>

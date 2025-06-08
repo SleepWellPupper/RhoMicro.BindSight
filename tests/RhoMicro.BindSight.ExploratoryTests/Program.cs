@@ -1,20 +1,20 @@
-using Microsoft.Extensions.Options;
 using RhoMicro.HotterReload;
 using RhoMicro.BindSight;
 using RhoMicro.BindSight.ExploratoryTests;
-using RhoMicro.BindSight.Generators;
-using RhoMicro.BindSight.Services;
-using RhoMicro.BindSight.Transformations;
 using HotReloadHandler = RhoMicro.BindSight.ExploratoryTests.HotReloadHandler;
 
 var builder = Host.CreateApplicationBuilder(args);
 
-builder.Configuration.AddCommandLine(args).AddInMemoryCollection(new Dictionary<String, String?>()
-{
-    { "Test:NestedSet:[1]:Int32Property", "1" },
-    { "Test:NestedSet:[2]:Int32Property", "2" },
-    { "Test:NestedSet:[3]:Int32Property", "3" }
-});
+builder.Configuration
+    .AddJsonFile("myconfig.json", optional: true)
+    .AddCommandLine(args)
+    .AddInMemoryCollection(
+        new Dictionary<String, String?>()
+        {
+            { "Test:NestedSet:[1]:Int32Property", "1" },
+            { "Test:NestedSet:[2]:Int32Property", "2" },
+            { "Test:NestedSet:[3]:Int32Property", "3" }
+        });
 
 builder.Services.AddHostedService<Worker>();
 

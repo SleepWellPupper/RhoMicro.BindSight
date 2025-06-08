@@ -3,7 +3,6 @@ namespace RhoMicro.BindSight.Transformations;
 using System.Collections.Concurrent;
 using System.Collections.Immutable;
 using Generators;
-using RhoMicro.CodeAnalysis;
 using Services;
 
 /// <summary>
