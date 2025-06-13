@@ -5,9 +5,10 @@ using Microsoft.CodeAnalysis.MSBuild;
 using ReferenceGenerator.XmlDocs;
 using RhoMicro.CodeAnalysis.Library.Text.Templating;
 
-public class AstroDocumentationService(
+internal class AstroDocumentationService(
     IAstroReferenceOptions options,
-    ILogger<AstroDocumentationService> logger)
+    ILogger<AstroDocumentationService> logger,
+    ILogger<AstroReferencePathsContext> pathsLogger)
 {
     public async Task Run(CancellationToken ct)
     {
@@ -21,7 +22,7 @@ public class AstroDocumentationService(
             return;
 
         var docsContext = XmlDocsContext.Create(compilation, ct);
-        var referencePaths = new AstroReferencePathsContext(compilation, options);
+        var referencePaths = new AstroReferencePathsContext(compilation, options, pathsLogger);
 
         var models = compilation.Assembly
             .GetPublicTypes(ct)

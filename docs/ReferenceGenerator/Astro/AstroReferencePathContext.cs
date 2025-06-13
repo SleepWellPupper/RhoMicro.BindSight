@@ -5,7 +5,10 @@ using System.Collections.Immutable;
 using System.Text;
 using Microsoft.CodeAnalysis;
 
-internal sealed class AstroReferencePathsContext(Compilation compilation, IAstroReferenceOptions options)
+internal sealed class AstroReferencePathsContext(
+    Compilation compilation,
+    IAstroReferenceOptions options,
+    ILogger<AstroReferencePathsContext> logger)
 {
     private readonly ConcurrentDictionary<ISymbol, AstroReferencePaths> _paths =
         new(SymbolEqualityComparer.Default);
@@ -30,6 +33,11 @@ internal sealed class AstroReferencePathsContext(Compilation compilation, IAstro
             AbsoluteFilePath: String.Empty,
             ContainingDirectory: String.Empty);
 
+        logger.LogInformation(
+            "Created external href path '{Href}' for '{Symbol}'.",
+            result.AnchorHref.Value,
+            symbol.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat));
+
         return result;
     }
 
@@ -41,6 +49,11 @@ internal sealed class AstroReferencePathsContext(Compilation compilation, IAstro
             AbsoluteFilePath: String.Empty,
             ContainingDirectory: String.Empty,
             AnchorHref: anchorHref);
+
+        logger.LogInformation(
+            "Created member href path '{Href}' for '{Symbol}'.",
+            result.AnchorHref.Value,
+            symbol.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat));
 
         return result;
     }
@@ -63,6 +76,11 @@ internal sealed class AstroReferencePathsContext(Compilation compilation, IAstro
             AbsoluteFilePath: absoluteFilePath,
             ContainingDirectory: containingDirectory,
             AnchorHref: anchorHref);
+
+        logger.LogInformation(
+            "Created type href path '{Href}' for '{Symbol}'.",
+            result.AnchorHref.Value,
+            type.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat));
 
         return result;
     }

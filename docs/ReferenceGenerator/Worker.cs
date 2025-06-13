@@ -2,7 +2,7 @@ namespace ReferenceGenerator;
 
 using Astro;
 
-public class Worker(
+internal class Worker(
     IHostApplicationLifetime lifetime,
     AstroDocumentationService astroDocumentationService)
     : BackgroundService
