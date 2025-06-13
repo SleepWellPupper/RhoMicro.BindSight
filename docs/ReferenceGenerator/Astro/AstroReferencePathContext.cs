@@ -55,7 +55,7 @@ internal sealed class AstroReferencePathsContext(Compilation compilation, IAstro
         AppendAstroNamespace(type.ContainingNamespace, stringBuilder.Clear());
         var directoryName = stringBuilder.ToString();
 
-        var anchorHref = AnchorHref.Create(type, options);
+        var anchorHref = AnchorHref.CreateForType(type, options);
         var absoluteFilePath = AbsoluteFilePath.Create(type, options);
 
         var containingDirectory = Path.Combine(

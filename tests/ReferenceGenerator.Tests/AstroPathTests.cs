@@ -32,7 +32,7 @@ public class AstroPathTests
         var type = TestHelpers.CompileType(source, name, out _);
 
         // Act
-        var actual = AnchorHref.Create(type, OptionsMock.Instance).AsString;
+        var actual = AnchorHref.CreateForType(type, OptionsMock.Instance).AsString;
 
         // Assert
         Assert.Equal(expected, actual);

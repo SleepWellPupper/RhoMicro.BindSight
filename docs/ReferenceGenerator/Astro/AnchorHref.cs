@@ -15,16 +15,16 @@ public readonly partial struct AnchorHref
     {
         return symbol switch
         {
-            INamedTypeSymbol type => Create((ISymbol)type, options),
-            IMethodSymbol method => Create(method, options),
-            IEventSymbol @event => Create(@event, options),
-            IPropertySymbol property => Create(property, options),
-            IFieldSymbol field => Create(field, options),
+            INamedTypeSymbol type => CreateForType(type, options),
+            IMethodSymbol method => CreateForMethod(method, options),
+            IEventSymbol @event => CreateForEvent(@event, options),
+            IPropertySymbol property => CreateForProperty(property, options),
+            IFieldSymbol field => CreateForField(field, options),
             _ => Empty
         };
     }
 
-    public static AnchorHref Create(IFieldSymbol field, IAstroReferenceOptions options)
+    public static AnchorHref CreateForField(IFieldSymbol field, IAstroReferenceOptions options)
     {
         var buffer = new DynamicallyAllocatedCharBuffer(stackalloc Char[256]);
         try
@@ -41,7 +41,7 @@ public readonly partial struct AnchorHref
         return new AnchorHref(value);
     }
 
-    public static AnchorHref Create(IEventSymbol @event, IAstroReferenceOptions options)
+    public static AnchorHref CreateForEvent(IEventSymbol @event, IAstroReferenceOptions options)
     {
         var buffer = new DynamicallyAllocatedCharBuffer(stackalloc Char[256]);
         try
@@ -58,7 +58,7 @@ public readonly partial struct AnchorHref
         return new AnchorHref(value);
     }
 
-    public static AnchorHref Create(IPropertySymbol property, IAstroReferenceOptions options)
+    public static AnchorHref CreateForProperty(IPropertySymbol property, IAstroReferenceOptions options)
     {
         var buffer = new DynamicallyAllocatedCharBuffer(stackalloc Char[256]);
         try
@@ -75,7 +75,7 @@ public readonly partial struct AnchorHref
         return new AnchorHref(value);
     }
 
-    public static AnchorHref Create(IMethodSymbol method, IAstroReferenceOptions options)
+    public static AnchorHref CreateForMethod(IMethodSymbol method, IAstroReferenceOptions options)
     {
         var buffer = new DynamicallyAllocatedCharBuffer(stackalloc Char[256]);
         try
@@ -142,7 +142,7 @@ public readonly partial struct AnchorHref
         }
     }
 
-    public static AnchorHref Create(INamedTypeSymbol type, IAstroReferenceOptions options)
+    public static AnchorHref CreateForType(INamedTypeSymbol type, IAstroReferenceOptions options)
     {
         var buffer = new DynamicallyAllocatedCharBuffer(stackalloc Char[256]);
         try
