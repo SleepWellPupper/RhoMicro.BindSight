@@ -27,14 +27,25 @@ internal sealed class AstroReferencePathsContext(
 
     private Boolean IsExternal(ISymbol symbol)
     {
-        if (!SymbolEqualityComparer.Default.Equals(symbol.ContainingAssembly, compilation.Assembly))
-            return true;
-
-        var @namespace = symbol.ContainingNamespace.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat);
-        if (@namespace.StartsWith("Microsoft") || @namespace.StartsWith("System"))
+        // if (!SymbolEqualityComparer.Default.Equals(symbol.ContainingAssembly, compilation.Assembly))
+        //     return true;
+        //
+        if (getRootNamespace(symbol.ContainingNamespace) is "Microsoft" or "System")
             return true;
 
         return false;
+
+        String getRootNamespace(INamespaceSymbol @namespace)
+        {
+            while (true)
+            {
+                if (@namespace.IsGlobalNamespace)
+                    return String.Empty;
+                if (@namespace.ContainingNamespace is { IsGlobalNamespace: true })
+                    return @namespace.Name;
+                @namespace = @namespace.ContainingNamespace;
+            }
+        }
     }
 
     private AstroReferencePaths CreateExternalPaths(ISymbol symbol)
