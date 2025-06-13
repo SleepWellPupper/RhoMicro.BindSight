@@ -26,7 +26,7 @@ const slugifyOptions = {
 
 // https://astro.build/config
 export default defineConfig({
-	site: 'https://sleepwellpupper.github.io',
+	site: 'https://docs.rhomicro.com',
 	base: '/RhoMicro.BindSight',
 	markdown: {
 		rehypePlugins: [
