@@ -42,6 +42,7 @@ export default defineConfig({
 	integrations: [
 		starlight({
 			title: 'BindSight',
+			tableOfContents: { minHeadingLevel: 2, maxHeadingLevel: 4 },
 			social: [
 				{
 					icon: 'github',
