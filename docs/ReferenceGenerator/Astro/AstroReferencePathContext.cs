@@ -5,11 +5,12 @@ using System.Collections.Immutable;
 using System.Text;
 using Microsoft.CodeAnalysis;
 
-internal sealed class AstroReferencePathContext(Compilation compilation, IAstroReferenceOptions options)
+internal sealed class AstroReferencePathsContext(Compilation compilation, IAstroReferenceOptions options)
 {
     private readonly ConcurrentDictionary<ISymbol, AstroReferencePaths> _paths =
         new(SymbolEqualityComparer.Default);
 
+    private const Char Separator = '_';
     public AstroReferencePaths GetPaths(ISymbol symbol) => _paths.GetOrAdd(symbol, CreatePaths);
 
     private AstroReferencePaths CreatePaths(ISymbol symbol) =>
@@ -19,47 +20,30 @@ internal sealed class AstroReferencePathContext(Compilation compilation, IAstroR
                 DeclaredAccessibility: Accessibility.Public
             } type
                 ? CreateTypePaths(type)
-                : symbol is
-                {
-                    DeclaredAccessibility: Accessibility.Public, ContainingType: { } containingType
-                }
-                    ? CreateMemberPaths(symbol, containingType)
-                    : AstroReferencePaths.Empty
+                : CreateMemberPaths(symbol)
             : CreateExternalPaths(symbol);
 
     private AstroReferencePaths CreateExternalPaths(ISymbol symbol)
     {
         var externalReferencePath = String.Format(
             options.ExternalReferenceUrlFormat,
-            Uri.EscapeDataString(symbol.ToDisplayString(SymbolDisplayFormats.FullyQualifiedNamespaceOmitted)));
+            Uri.EscapeDataString(symbol.ToDisplayString(SymbolDisplayFormats.ExternalReferenceFormat)));
 
         var result = new AstroReferencePaths(
             AnchorHref: externalReferencePath,
-            AbsoluteFilePath: externalReferencePath,
-            ContainingDirectory: String.Empty,
-            HeadingId: String.Empty);
+            AbsoluteFilePath: String.Empty,
+            ContainingDirectory: String.Empty);
 
         return result;
     }
 
-    private AstroReferencePaths CreateMemberPaths(
-        ISymbol symbol,
-        INamedTypeSymbol containingType)
+    private AstroReferencePaths CreateMemberPaths(ISymbol symbol)
     {
-        var stringBuilder = new StringBuilder();
-        AppendAstroFragment(symbol, containingType, stringBuilder);
-        var fragment = stringBuilder.ToString();
-        AppendAstroNamespace(symbol.ContainingNamespace, stringBuilder.Clear(), '.');
-        var directoryName = stringBuilder.ToString();
-        var anchorHref = Path.Combine(options.RelativeReferencePathBase, directoryName, fragment);
-
-        AppendAstroId(symbol, stringBuilder.Clear());
-        var headingId = stringBuilder.ToString();
+        var anchorHref = AnchorHref.Create(symbol, options);
 
         var result = new AstroReferencePaths(
             AbsoluteFilePath: String.Empty,
             ContainingDirectory: String.Empty,
-            HeadingId: headingId,
             AnchorHref: anchorHref);
 
         return result;
@@ -68,59 +52,23 @@ internal sealed class AstroReferencePathContext(Compilation compilation, IAstroR
     private AstroReferencePaths CreateTypePaths(INamedTypeSymbol type)
     {
         var stringBuilder = new StringBuilder();
-        AppendAstroId(type, stringBuilder);
-        var headingId = stringBuilder.ToString();
-
-        AppendAstroNamespace(type.ContainingNamespace, stringBuilder.Clear(), separator: '.');
+        AppendAstroNamespace(type.ContainingNamespace, stringBuilder.Clear());
         var directoryName = stringBuilder.ToString();
 
-        var anchorHref = Path.Combine(options.RelativeReferencePathBase, directoryName, headingId);
+        var anchorHref = AnchorHref.Create(type, options);
+        var absoluteFilePath = AbsoluteFilePath.Create(type, options);
 
         var containingDirectory = Path.Combine(
             Environment.CurrentDirectory,
             options.ReferenceDirectory,
             directoryName);
 
-        AppendAstroType(type, stringBuilder.Clear());
-        var absoluteFilePath = Path.Combine(
-            containingDirectory,
-            $"{stringBuilder}.md");
-
         var result = new AstroReferencePaths(
             AbsoluteFilePath: absoluteFilePath,
             ContainingDirectory: containingDirectory,
-            HeadingId: headingId,
             AnchorHref: anchorHref);
 
         return result;
-    }
-
-    private static void AppendAstroId(ISymbol member, StringBuilder stringBuilder)
-    {
-        stringBuilder.Append(member.Name);
-
-        if (member is not IMethodSymbol m)
-            return;
-
-        stringBuilder.Append($"-{m.Arity}");
-
-        if (m.Parameters is [_, ..] @params)
-            AppendAstroIdParameters(stringBuilder, @params);
-    }
-
-    private static void AppendAstroIdParameters(StringBuilder stringBuilder, ImmutableArray<IParameterSymbol> @params)
-    {
-        stringBuilder.Append("-0p0-");
-
-        for (var i = 0; i < @params.Length; i++)
-        {
-            if (i > 0)
-                stringBuilder.Append('_');
-
-            AppendAstroIdParameterType(@params[i].Type, stringBuilder);
-        }
-
-        stringBuilder.Append("-0p1");
     }
 
     private static void AppendAstroIdParameterType(ITypeSymbol type, StringBuilder stringBuilder)
@@ -128,7 +76,7 @@ internal sealed class AstroReferencePathContext(Compilation compilation, IAstroR
         if (type.ContainingType is { } parent)
         {
             AppendAstroIdParameterType(parent, stringBuilder);
-            stringBuilder.Append('-');
+            stringBuilder.Append(Separator);
         }
 
         if (type is IArrayTypeSymbol arrayType)
@@ -164,7 +112,7 @@ internal sealed class AstroReferencePathContext(Compilation compilation, IAstroR
     {
         AppendAstroIdParameterTypeNamespace(type, stringBuilder);
 
-        stringBuilder.Append($"{type.Name}-{type.Arity}");
+        stringBuilder.Append($"{type.Name}{Separator}{type.Arity}");
 
         if (type.TypeArguments is not [_, ..] args)
             return;
@@ -174,24 +122,24 @@ internal sealed class AstroReferencePathContext(Compilation compilation, IAstroR
 
     private static void AppendAstroIdGenericTypeArguments(StringBuilder stringBuilder, ImmutableArray<ITypeSymbol> args)
     {
-        stringBuilder.Append("-0g0-");
+        stringBuilder.Append($"{Separator}0g0{Separator}");
 
         for (var i = 0; i < args.Length; i++)
         {
             if (i > 0)
-                stringBuilder.Append('_');
+                stringBuilder.Append(Separator);
 
             AppendAstroIdParameterType(args[i], stringBuilder);
         }
 
-        stringBuilder.Append("-0g1");
+        stringBuilder.Append($"{Separator}0g1");
     }
 
     private static void AppendAstroIdParameterTypeNamespace(ITypeSymbol type, StringBuilder stringBuilder)
     {
-        AppendAstroNamespace(type.ContainingNamespace, stringBuilder, separator: '-');
+        AppendAstroNamespace(type.ContainingNamespace, stringBuilder);
         if (!type.ContainingNamespace.IsGlobalNamespace)
-            stringBuilder.Append('-');
+            stringBuilder.Append(Separator);
     }
 
     private static void AppendAstroIdParameterArrayType(IArrayTypeSymbol array, StringBuilder stringBuilder)
@@ -201,43 +149,19 @@ internal sealed class AstroReferencePathContext(Compilation compilation, IAstroR
         stringBuilder.Append($"-{array.Rank}-0a1");
     }
 
-    private static void AppendAstroFragment(
-        ISymbol member,
-        INamedTypeSymbol containingType,
-        StringBuilder stringBuilder)
-    {
-        AppendAstroType(containingType, stringBuilder);
-        stringBuilder.Append('#');
-        AppendAstroId(member, stringBuilder);
-    }
-
-    // namespace-namespace-namespace
     private static void AppendAstroNamespace(
         INamespaceSymbol @namespace,
-        StringBuilder stringBuilder,
-        Char separator)
+        StringBuilder stringBuilder)
     {
         if (@namespace.IsGlobalNamespace)
             return;
 
         if (@namespace.ContainingNamespace is { IsGlobalNamespace: false } parent)
         {
-            AppendAstroNamespace(parent, stringBuilder, separator);
-            stringBuilder.Append(separator);
+            AppendAstroNamespace(parent, stringBuilder);
+            stringBuilder.Append('.');
         }
 
         stringBuilder.Append(@namespace.Name);
-    }
-
-    // typename-arity-nestedtypename-arity
-    private static void AppendAstroType(INamedTypeSymbol type, StringBuilder stringBuilder)
-    {
-        if (type.ContainingType is { } parent)
-        {
-            AppendAstroType(parent, stringBuilder);
-            stringBuilder.Append('-');
-        }
-
-        stringBuilder.Append($"{type.Name}-{type.Arity}");
     }
 }

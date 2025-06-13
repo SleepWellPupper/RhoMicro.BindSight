@@ -18,10 +18,14 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="RhoMicro.CodeAnalysis.UnionsGenerator" Version="20.1.5">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="RhoMicro.CodeAnalysis.UtilityGenerators" Version="20.1.5">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="RhoMicro.HotterReload" Version="1.0.2" />
+    <PackageReference Include="RhoMicro.HotterReload" Version="1.0.2"/>
   </ItemGroup>
 </Project>

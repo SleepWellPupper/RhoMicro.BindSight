@@ -6,13 +6,11 @@ using XmlDocs;
 
 internal sealed class MemberDocumentationModel(
     ISymbol symbol,
-    Compilation compilation,
-    XmlDocsParseNodeOptions xmlDocsParseNodeOptions)
+    XmlDocsContext docsContext)
 {
     public ISymbol Symbol => symbol;
-
-    [field: MaybeNull]
-    public MemberSyntax? Documentation => field ??= XmlDocsParser.Create(symbol, compilation, xmlDocsParseNodeOptions).Member;
+    public XmlDocsContext DocsContext => docsContext;
+    public MemberElement Docs => docsContext.Provider.GetMemberXmlDocs(Symbol);
 
     [field: MaybeNull] public String Signature => field ??= symbol.ToDisplayString(SymbolDisplayFormats.Signature);
 }

@@ -1,14 +1,33 @@
 namespace ReferenceGenerator;
 
 using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 internal static class SymbolDisplayFormats
 {
-    public static SymbolDisplayFormat FullyQualifiedNamespaceOmitted { get; } =
+    public static SymbolDisplayFormat FullyQualifiedGlobalNamespaceOmitted { get; } =
         SymbolDisplayFormat.FullyQualifiedFormat.WithGlobalNamespaceStyle(SymbolDisplayGlobalNamespaceStyle.Omitted);
 
+    public static SymbolDisplayFormat FullyQualifiedNamespaceOmitted { get; } =
+        new(typeQualificationStyle: SymbolDisplayTypeQualificationStyle.NameAndContainingTypes,
+            genericsOptions: SymbolDisplayGenericsOptions.IncludeTypeParameters);
+
+    public static SymbolDisplayFormat Constraints { get; } =
+        new(genericsOptions: SymbolDisplayGenericsOptions.IncludeTypeConstraints);
+
+    public static SymbolDisplayFormat HeaderSignature { get; } =
+        new(genericsOptions: SymbolDisplayGenericsOptions.IncludeTypeParameters,
+            parameterOptions: SymbolDisplayParameterOptions.IncludeType,
+            memberOptions: SymbolDisplayMemberOptions.IncludeParameters,
+            typeQualificationStyle: SymbolDisplayTypeQualificationStyle.NameOnly,
+            miscellaneousOptions: SymbolDisplayMiscellaneousOptions.UseSpecialTypes);
+
+    public static SymbolDisplayFormat NameOrSpecialName { get; } =
+        new(typeQualificationStyle: SymbolDisplayTypeQualificationStyle.NameOnly,
+            miscellaneousOptions: SymbolDisplayMiscellaneousOptions.UseSpecialTypes);
+
     public static SymbolDisplayFormat SimpleGenericName { get; } =
-        new(
+        new(memberOptions: SymbolDisplayMemberOptions.IncludeContainingType,
             typeQualificationStyle: SymbolDisplayTypeQualificationStyle.NameAndContainingTypes,
             genericsOptions: SymbolDisplayGenericsOptions.IncludeTypeParameters,
             parameterOptions: SymbolDisplayParameterOptions.IncludeType);
@@ -47,4 +66,8 @@ internal static class SymbolDisplayFormats
             typeQualificationStyle: SymbolDisplayTypeQualificationStyle.NameAndContainingTypes,
             genericsOptions: SymbolDisplayGenericsOptions.IncludeTypeParameters,
             delegateStyle: SymbolDisplayDelegateStyle.NameOnly);
+
+    public static SymbolDisplayFormat ExternalReferenceFormat { get; } =
+        FullyQualifiedGlobalNamespaceOmitted.WithMemberOptions(
+            SymbolDisplayMemberOptions.IncludeContainingType);
 }

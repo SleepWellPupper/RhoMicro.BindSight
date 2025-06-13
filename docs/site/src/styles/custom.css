@@ -1,0 +1,21 @@
+:root {
+    --sl-content-width: 75rem;
+    --sl-text-5xl: 3.5rem;
+}
+
+.tree-icon {
+    width: 0;
+    height: 0;
+}
+
+.cs-class {
+    color: #448d45;
+}
+
+.cs-struct{
+    color:#447d8d;
+}
+
+.cs-interface {
+    color: rgb(249 219 119);
+}

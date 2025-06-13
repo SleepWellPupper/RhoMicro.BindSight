@@ -7,10 +7,10 @@ using Microsoft.Extensions.Logging;
 /// <summary>
 /// Runs options docs generators.
 /// </summary>
-/// <param name="optionsDocsRunnerBindSightRunnerOptions">
+/// <param name="options">
 /// The options to use when running generators.
 /// </param>
-/// <param name="optionsDocsGeneratorBindSightGeneratorOptionsProvider">
+/// <param name="optionsProvider">
 /// The the generator options provider to use when running generators.
 /// </param>
 /// <param name="generators">
@@ -24,8 +24,8 @@ using Microsoft.Extensions.Logging;
 /// the <see cref="ExitMode.Host"/> mode.
 /// </param>
 public sealed class BindSightGeneratorRunner(
-    IBindSightRunnerOptions optionsDocsRunnerBindSightRunnerOptions,
-    IBindSightGeneratorOptionsProvider optionsDocsGeneratorBindSightGeneratorOptionsProvider,
+    IBindSightRunnerOptions options,
+    IBindSightGeneratorOptionsProvider optionsProvider,
     IEnumerable<IBindSightGenerator> generators,
     ILogger<BindSightGeneratorRunner> logger,
     IHostApplicationLifetime hostLifetime)
@@ -45,19 +45,19 @@ public sealed class BindSightGeneratorRunner(
     {
         cancellationToken.ThrowIfCancellationRequested();
 
-        if (!optionsDocsRunnerBindSightRunnerOptions.Run)
+        if (!options.Run)
             return false;
 
         var exitCode = await RunGenerators(cancellationToken);
 
-        logger.LogInformation("Exiting with mode '{Mode}'.", optionsDocsRunnerBindSightRunnerOptions.ExitMode);
+        logger.LogInformation("Exiting with mode '{Mode}'.", options.ExitMode);
 
-        if (cancellationToken.IsCancellationRequested && !optionsDocsRunnerBindSightRunnerOptions.ExitOnCancellation)
+        if (cancellationToken.IsCancellationRequested && !options.ExitOnCancellation)
             return true;
 
-        if (optionsDocsRunnerBindSightRunnerOptions.ExitMode is ExitMode.Environment)
+        if (options.ExitMode is ExitMode.Environment)
             Environment.Exit(exitCode);
-        if (optionsDocsRunnerBindSightRunnerOptions.ExitMode is ExitMode.Host)
+        if (options.ExitMode is ExitMode.Host)
             hostLifetime.StopApplication();
 
         return true;
@@ -70,7 +70,7 @@ public sealed class BindSightGeneratorRunner(
         {
             cancellationToken.ThrowIfCancellationRequested();
 
-            var optionsTask = optionsDocsGeneratorBindSightGeneratorOptionsProvider.GetOptions(cancellationToken);
+            var optionsTask = optionsProvider.GetOptions(cancellationToken);
             if (!optionsTask.IsCompletedSuccessfully)
                 await optionsTask;
 

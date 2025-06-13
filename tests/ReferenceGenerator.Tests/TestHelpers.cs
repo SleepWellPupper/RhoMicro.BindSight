@@ -50,18 +50,20 @@ internal static partial class TestHelpers
         return type;
     }
 
-    public static TMember CompileTypeMember<TMember>(
+    public static ISymbol CompileSymbol(
         String source,
-        String containingTypeFullyQualifiedMetadataName,
+        String containingTypeMetadataName,
         String memberName,
         out Compilation compilation)
-        where TMember : ISymbol
     {
-        var type = CompileType(source, containingTypeFullyQualifiedMetadataName, out compilation);
-        var member = type.GetMembers(memberName).OfType<TMember>().SingleOrDefault();
+        var type = CompileType(source, containingTypeMetadataName, out compilation);
+        if (memberName is [])
+            return type;
+
+        var member = type.GetMembers(memberName).SingleOrDefault();
 
         if (member is null)
-            Assert.Fail($"Unable to locate member of type '{typeof(TMember).Name}' with name '{memberName}'.");
+            Assert.Fail($"Unable to locate member '{memberName}' in type '{containingTypeMetadataName}'.");
 
         return member;
     }

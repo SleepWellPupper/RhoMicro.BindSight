@@ -8,29 +8,23 @@ using XmlDocs;
 
 internal sealed class TypeDocumentationModel(
     INamedTypeSymbol type,
-    Compilation compilation,
-    XmlDocsParseNodeOptions xmlDocsParseNodeOptions)
+    XmlDocsContext docsContext)
 {
     public INamedTypeSymbol Type => type;
+    public MemberElement Docs => DocsContext.Provider.GetXmlDocs(Type);
+    public XmlDocsContext DocsContext => docsContext;
 
     [field: MaybeNull]
     public String Namespace =>
-        field ??= Type.ContainingNamespace.ToDisplayString(SymbolDisplayFormats.FullyQualifiedNamespaceOmitted);
-
-    [field: MaybeNull] public String TypeKindDisplay => field ??= type.TypeKind.ToString();
-
-    [field: MaybeNull]
-    public MemberNode Documentation =>
-        field ??= XmlDocsParser.Create(
-            type,
-            compilation,
-            xmlDocsParseNodeOptions).Member;
+        field ??= Type.ContainingNamespace.ToDisplayString(SymbolDisplayFormats.FullyQualifiedGlobalNamespaceOmitted);
 
     [field: MaybeNull] public String DisplayName => field ??= type.ToDisplayString(SymbolDisplayFormats.PathName);
 
     [field: MaybeNull]
     public String Signature => field ??=
-        $"{SyntaxFacts.GetText(type.DeclaredAccessibility)} {type.ToDisplayString(SymbolDisplayFormats.Signature)}";
+        $"{SyntaxFacts.GetText(type.DeclaredAccessibility)} " +
+        $"{(type.IsSealed ? "sealed " : type.IsAbstract ? "abstract " : type.IsStatic ? "static " : String.Empty)}" +
+        $"{type.ToDisplayString(SymbolDisplayFormats.Signature)}";
 
     public ImmutableArray<MemberDocumentationModel> Members
     {
@@ -40,17 +34,48 @@ internal sealed class TypeDocumentationModel(
                 field =
                 [
                     .. type.GetMembers()
-                        .Where(m => m is
-                            {
-                                DeclaredAccessibility: Accessibility.Protected or Accessibility.Public,
-                                Kind: SymbolKind.Property or SymbolKind.Field or SymbolKind.Method or SymbolKind.Event
-                            }
-                            and not IMethodSymbol
-                            {
-                                MethodKind: MethodKind.PropertyGet or MethodKind.PropertySet
-                            }
-                        )
-                        .Select(s => new MemberDocumentationModel(s, compilation, xmlDocsParseNodeOptions))
+                        .Where(m =>
+                        {
+                            // primary ctor or operator?
+                            if (m is IMethodSymbol
+                                {
+                                    MethodKind:
+                                    MethodKind.Constructor or
+                                    MethodKind.BuiltinOperator or
+                                    MethodKind.UserDefinedOperator,
+                                    CanBeReferencedByName: false
+                                })
+                                return true;
+
+                            if (m is
+                                {
+                                    DeclaredAccessibility: Accessibility.Protected or Accessibility.ProtectedOrInternal,
+                                    ContainingType: { IsSealed: true }
+                                })
+                                return false;
+
+                            if (m.DeclaredAccessibility is not
+                                (Accessibility.Protected or
+                                Accessibility.ProtectedOrInternal or
+                                Accessibility.Public))
+                                return false;
+
+                            if (m is not
+                                {
+                                    Kind:
+                                    SymbolKind.Property or
+                                    SymbolKind.Field or
+                                    SymbolKind.Method or
+                                    SymbolKind.Event,
+                                })
+                                return false;
+
+                            if (m is IMethodSymbol { MethodKind: MethodKind.PropertyGet or MethodKind.PropertySet })
+                                return false;
+
+                            return true;
+                        })
+                        .Select(s => new MemberDocumentationModel(s, docsContext))
                 ];
 
             return field;

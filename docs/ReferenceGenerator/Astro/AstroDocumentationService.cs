@@ -2,6 +2,7 @@ namespace ReferenceGenerator.Astro;
 
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.MSBuild;
+using Microsoft.Extensions.Primitives;
 using ReferenceGenerator.XmlDocs;
 using RhoMicro.CodeAnalysis.Library.Text.Templating;
 
@@ -12,7 +13,7 @@ public class AstroDocumentationService(
     public async Task Run(CancellationToken ct)
     {
         if (options.DryRun)
-            LoggerExtensions.LogInformation(logger, "Running dry run.");
+            logger.LogInformation("Running dry run.");
 
         var project = await GetProject(ct);
         var compilation = await project.GetCompilationAsync(ct);
@@ -20,11 +21,12 @@ public class AstroDocumentationService(
         if (compilation is null)
             return;
 
-        var referencePaths = new AstroReferencePathContext(compilation, options);
+        var docsContext = XmlDocsContext.Create(compilation, ct);
+        var referencePaths = new AstroReferencePathsContext(compilation, options);
 
         var models = compilation.Assembly
             .GetPublicTypes(ct)
-            .Select(t => new TypeDocumentationModel(t, compilation, XmlDocsParseNodeOptions.Default))
+            .Select(t => new TypeDocumentationModel(t, docsContext))
             .ToList();
 
         ClearReferenceDirectory(models, referencePaths);
@@ -33,14 +35,14 @@ public class AstroDocumentationService(
 
     private async Task GenerateDocs(
         List<TypeDocumentationModel> models,
-        AstroReferencePathContext referencePaths,
+        AstroReferencePathsContext referencePaths,
         CancellationToken ct)
     {
         foreach (var model in models)
             await GenerateAstroDocs(model, referencePaths, ct);
     }
 
-    private void ClearReferenceDirectory(List<TypeDocumentationModel> models, AstroReferencePathContext referencePaths)
+    private void ClearReferenceDirectory(List<TypeDocumentationModel> models, AstroReferencePathsContext referencePaths)
     {
         if (options.DryRun || !options.ClearReferenceDirectory)
             return;
@@ -59,7 +61,7 @@ public class AstroDocumentationService(
 
     private async Task GenerateAstroDocs(
         TypeDocumentationModel model,
-        AstroReferencePathContext referencePaths,
+        AstroReferencePathsContext referencePaths,
         CancellationToken ct)
     {
         ct.ThrowIfCancellationRequested();
@@ -79,7 +81,7 @@ public class AstroDocumentationService(
                 referencePaths),
             ct);
 
-        await File.WriteAllTextAsync(paths.AbsoluteFilePath, content, ct);
+        await File.WriteAllTextAsync(paths.AbsoluteFilePath.AsString, content, ct);
     }
 
     private async Task<Project> GetProject(CancellationToken ct)

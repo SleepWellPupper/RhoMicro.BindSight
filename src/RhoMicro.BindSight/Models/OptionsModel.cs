@@ -1,8 +1,11 @@
 namespace RhoMicro.BindSight.Models;
 
+using System.Collections;
 using System.Collections.Concurrent;
 using System.Collections.Immutable;
 using Enrichments;
+using HotterReload;
+using Microsoft.Extensions.DependencyInjection;
 
 /// <summary>
 /// Represents an options registration.

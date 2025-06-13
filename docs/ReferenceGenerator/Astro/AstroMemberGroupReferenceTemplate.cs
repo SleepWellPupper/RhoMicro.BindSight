@@ -14,9 +14,10 @@ using RhoMicro.CodeAnalysis;
             (:new AstroMemberReferenceTemplate(member, referencePaths):)
         }
     :}
+
     """
 )]
 internal readonly partial struct AstroMemberGroupReferenceTemplate(
     ImmutableArray<MemberDocumentationModel> members,
     String name,
-    AstroReferencePathContext referencePaths);
+    AstroReferencePathsContext referencePaths);

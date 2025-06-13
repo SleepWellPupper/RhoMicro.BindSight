@@ -4,18 +4,26 @@ using RhoMicro.CodeAnalysis;
 
 [Template(
     """
-    #### (:model.Symbol.GetMemberName():) <a id="(:Id:)"></a>
-
-    (:new AstroDocumentationNodeTemplate(model.Documentation.GetSummary(ct), referencePaths):)
+    #### (:Header:)
 
     ```cs
     (:model.Signature:)
     ```
 
+    (:Markdown:)
+
     """, CancellationTokenParameterName = "ct")]
 internal readonly partial struct AstroMemberReferenceTemplate(
     MemberDocumentationModel model,
-    AstroReferencePathContext referencePaths)
+    AstroReferencePathsContext references)
 {
-    private String Id => referencePaths.GetPaths(model.Symbol).HeadingId;
+    private String Markdown => model.GetMarkdownString(references);
+
+    private String Header =>
+        model.Symbol.ToDisplayString(SymbolDisplayFormats.HeaderSignature)
+            .Replace("<", "&lt;")
+            .Replace(">", "&gt;");
+
+    private String Link =>
+        references.GetPaths(model.Symbol).AnchorHref.AsString;
 }

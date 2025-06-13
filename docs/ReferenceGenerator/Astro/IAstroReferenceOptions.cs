@@ -17,7 +17,7 @@ public partial interface IAstroReferenceOptions
 
     [DefaultValueExpression("true")] Boolean ClearReferenceDirectory { get; }
 
-    [DefaultValueExpression(@"""https://duckduckgo.com/?q={0}""")]
+    [DefaultValueExpression(@"""https://learn.microsoft.com/en-us/dotnet/api/?term={0}""")]
     String ExternalReferenceUrlFormat { get; }
 
     [DefaultValueExpression("true")] Boolean DryRun { get; }

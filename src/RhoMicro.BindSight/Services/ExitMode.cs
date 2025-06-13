@@ -15,7 +15,7 @@ public enum ExitMode
     None,
 
     /// <summary>
-    /// The runner will exit via <see cref="Microsoft.Extensions.Hosting.IHostApplicationLifetime"/>.<see cref="Microsoft.Extensions.Hosting.IHostApplicationLifetime.StopApplication"/>.
+    /// The runner will exit via <see cref="Microsoft.Extensions.Hosting.IHostApplicationLifetime.StopApplication"/>.
     /// </summary>
     [Description("The runner will exit via `IHostApplicationLifetime.StopApplication`.")]
     Host,

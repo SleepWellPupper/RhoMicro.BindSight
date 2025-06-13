@@ -1,12 +1,45 @@
 // @ts-check
 import { defineConfig } from 'astro/config';
 import starlight from '@astrojs/starlight';
-import mdx from '@astrojs/mdx';
+import rehypeSlugify from '@microflash/rehype-slugify'
+import { slugifyWithCounter } from '@sindresorhus/slugify'
+
+const slugify = slugifyWithCounter()
+const slugifyOptions = {
+	separator: '-',
+	lowercase: true,
+	decamelize: false,
+	customReplacements: [
+		['<', '_'], 
+		['>', '_'],
+		['(', '_'],
+		[')', '_'],
+		['__', '_'],
+		[' ', '_'],
+		[',', ''],
+		['.','_']
+	],
+	preserveLeadingUnderscore: false,
+	preserveTrailingDash: false,
+	preserveCharacters: ['_']
+}
 
 // https://astro.build/config
 export default defineConfig({
 	site: 'https://sleepwellpupper.github.io',
 	base: '/RhoMicro.BindSight',
+	markdown: {
+		rehypePlugins: [
+			[rehypeSlugify, {
+				reset() {
+					slugify.reset()
+				},
+				slugify(text) {
+					return slugify(text, slugifyOptions).replace(/_+$/, "")
+				}
+			}]
+		],
+	},
 	integrations: [
 		starlight({
 			title: 'BindSight',
@@ -30,6 +63,9 @@ export default defineConfig({
 					label: 'Reference',
 					autogenerate: { directory: 'reference' },
 				},
+			], customCss: [
+				// Relative path to your custom CSS file
+				'./src/styles/custom.css',
 			],
 		}),
 	],

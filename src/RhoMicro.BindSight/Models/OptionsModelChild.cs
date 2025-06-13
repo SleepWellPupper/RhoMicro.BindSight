@@ -6,7 +6,7 @@ using System.Reflection;
 using Enrichments;
 
 /// <summary>
-/// Models a direct or indirect property or generic argument thereof of a registered options type.
+/// Models a direct or indirect property or generic argument of a registered options type.
 /// </summary>
 public sealed class OptionsModelChild : IEquatable<OptionsModelChild>
 {
