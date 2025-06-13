@@ -4,6 +4,7 @@ import starlight from '@astrojs/starlight';
 import rehypeSlugify from '@microflash/rehype-slugify'
 import { slugifyWithCounter } from '@sindresorhus/slugify'
 import starlightLinksValidator from 'starlight-links-validator'
+import starlightLlmsTxt from 'starlight-llms-txt'
 
 const slugify = slugifyWithCounter()
 const slugifyOptions = {
@@ -43,7 +44,10 @@ export default defineConfig({
 	integrations: [
 		starlight({
 			title: 'BindSight',
-			plugins: [starlightLinksValidator()],
+			plugins: [
+                starlightLinksValidator(),
+                starlightLlmsTxt(),
+            ],
 			tableOfContents: { minHeadingLevel: 2, maxHeadingLevel: 4 },
 			social: [
 				{
