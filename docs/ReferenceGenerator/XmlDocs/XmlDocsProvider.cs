@@ -3,12 +3,10 @@ namespace ReferenceGenerator.XmlDocs;
 using System.Collections.Concurrent;
 using System.Collections.Immutable;
 using System.Diagnostics.CodeAnalysis;
-using System.Net.Mime;
-using System.Runtime.InteropServices.JavaScript;
 using System.Xml;
 using System.Xml.Linq;
 using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
+using RhoMicro.CodeAnalysis.Library.Text.Templating;
 
 public sealed class XmlDocsProvider
 {
@@ -439,9 +437,35 @@ public sealed class XmlDocsProvider
     }
 
     private static String RemoveWhitespace(String text, XmlDocsProviderOptions options)
-        => options.TrimmableWhitespace is [_, ..] tokens
-            ? text.Replace(tokens, String.Empty)
-            : text;
+    {
+        var buffer = new DynamicallyAllocatedCharBuffer(stackalloc Char[256]);
+        try
+        {
+            var textSpan = text.AsSpan();
+            var segments = textSpan.Split(options.TrimmableWhitespace);
+            foreach (var range in segments)
+            {
+                var (offset, length) = range.GetOffsetAndLength(textSpan.Length);
+
+                if (length is 0)
+                    continue;
+
+                if (buffer.Span.Length > 0)
+                    buffer.Add(' ');
+
+                var segment = textSpan.Slice(offset, length);
+                buffer.Add(segment);
+            }
+
+            var result = buffer.ToString();
+
+            return result;
+        }
+        finally
+        {
+            buffer.Dispose();
+        }
+    }
 
     private static void AddInterfaceImplementationOrOverriddenMembers(
         INamedTypeSymbol type,

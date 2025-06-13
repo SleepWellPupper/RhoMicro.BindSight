@@ -98,7 +98,8 @@ internal static class SymbolExtensions
             {
                 INamedTypeSymbol { IsGenericType: true } genericType => genericType.ConstructedFrom,
                 IMethodSymbol { IsGenericMethod: true } genericMethod => genericMethod.ConstructedFrom,
-                ITypeParameterSymbol typeParameter => typeParameter.ContainingSymbol,
+                IPropertySymbol => symbol,
+                { ContainingSymbol: { } containingSymbol } => containingSymbol,
                 _ => symbol
             };
 

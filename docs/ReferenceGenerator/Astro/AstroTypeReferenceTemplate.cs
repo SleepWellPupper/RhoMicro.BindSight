@@ -3,7 +3,6 @@ namespace ReferenceGenerator.Astro;
 using System.Collections.Immutable;
 using System.Text;
 using Microsoft.CodeAnalysis;
-using Microsoft.Extensions.Primitives;
 using RhoMicro.CodeAnalysis;
 using XmlDocs;
 

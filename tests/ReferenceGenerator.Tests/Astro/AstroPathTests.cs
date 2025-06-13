@@ -1,6 +1,5 @@
 namespace ReferenceGenerator.Tests;
 
-using System.Runtime.InteropServices.JavaScript;
 using Astro;
 
 public class AstroPathTests

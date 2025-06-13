@@ -1,6 +1,5 @@
 namespace ReferenceGenerator;
 
-using Microsoft.Build.Construction;
 using Microsoft.CodeAnalysis;
 
 internal static class SymbolExtensions

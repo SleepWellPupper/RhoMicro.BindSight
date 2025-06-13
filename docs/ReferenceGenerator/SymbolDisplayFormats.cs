@@ -1,7 +1,6 @@
 namespace ReferenceGenerator;
 
 using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 internal static class SymbolDisplayFormats
 {
@@ -29,8 +28,7 @@ internal static class SymbolDisplayFormats
     public static SymbolDisplayFormat SimpleGenericName { get; } =
         new(memberOptions: SymbolDisplayMemberOptions.IncludeContainingType,
             typeQualificationStyle: SymbolDisplayTypeQualificationStyle.NameAndContainingTypes,
-            genericsOptions: SymbolDisplayGenericsOptions.IncludeTypeParameters,
-            parameterOptions: SymbolDisplayParameterOptions.IncludeType);
+            genericsOptions: SymbolDisplayGenericsOptions.IncludeTypeParameters);
 
     public static SymbolDisplayFormat Signature { get; } =
         new(globalNamespaceStyle: SymbolDisplayGlobalNamespaceStyle.Omitted,

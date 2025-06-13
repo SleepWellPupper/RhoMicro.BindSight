@@ -1,7 +1,5 @@
 namespace ReferenceGenerator.XmlDocs;
 
-using System.Diagnostics.CodeAnalysis;
-
 public sealed record InlineCodeElement(
     XmlDocsElements<XmlDocsChildElement> Elements)
     : XmlDocsChildElement(XmlDocsKind.InlineCode)

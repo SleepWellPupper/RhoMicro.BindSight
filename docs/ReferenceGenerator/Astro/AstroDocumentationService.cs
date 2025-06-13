@@ -2,7 +2,6 @@ namespace ReferenceGenerator.Astro;
 
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.MSBuild;
-using Microsoft.Extensions.Primitives;
 using ReferenceGenerator.XmlDocs;
 using RhoMicro.CodeAnalysis.Library.Text.Templating;
 

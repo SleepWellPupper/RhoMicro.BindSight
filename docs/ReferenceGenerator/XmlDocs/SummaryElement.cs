@@ -1,7 +1,5 @@
 namespace ReferenceGenerator.XmlDocs;
 
-using System.Diagnostics.CodeAnalysis;
-
 public sealed record SummaryElement(
     XmlDocsElements<XmlDocsChildElement> Elements)
     : XmlDocsElement(XmlDocsKind.Summary)

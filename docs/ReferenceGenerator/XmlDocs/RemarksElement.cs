@@ -1,7 +1,5 @@
 namespace ReferenceGenerator.XmlDocs;
 
-using System.Diagnostics.CodeAnalysis;
-
 public sealed record RemarksElement(
     XmlDocsElements<XmlDocsChildElement> Elements)
     : XmlDocsElement(XmlDocsKind.Remarks)

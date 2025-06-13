@@ -2,7 +2,6 @@ namespace ReferenceGenerator.XmlDocs;
 
 using System.Runtime.CompilerServices;
 using System.Text;
-using System.Text.RegularExpressions;
 
 public sealed class XmlStringVisitor(StringBuilder builder) : IStringBuildingXmlDocsVisitor
 {

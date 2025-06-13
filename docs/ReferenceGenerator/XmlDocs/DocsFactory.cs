@@ -1,7 +1,5 @@
 namespace ReferenceGenerator.XmlDocs;
 
-using Microsoft.Extensions.Options;
-
 public static class DocsFactory
 {
     public static MemberElement Member(String summary)
