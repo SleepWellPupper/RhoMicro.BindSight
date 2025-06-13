@@ -3,6 +3,7 @@ import { defineConfig } from 'astro/config';
 import starlight from '@astrojs/starlight';
 import rehypeSlugify from '@microflash/rehype-slugify'
 import { slugifyWithCounter } from '@sindresorhus/slugify'
+import starlightLinksValidator from 'starlight-links-validator'
 
 const slugify = slugifyWithCounter()
 const slugifyOptions = {
@@ -17,7 +18,7 @@ const slugifyOptions = {
 		[' ', '_'],
 		[',', ''],
 		['.', '_'],
-		['__','_']
+		['__', '_']
 	],
 	preserveLeadingUnderscore: false,
 	preserveTrailingDash: false,
@@ -42,6 +43,7 @@ export default defineConfig({
 	integrations: [
 		starlight({
 			title: 'BindSight',
+			plugins: [starlightLinksValidator()],
 			tableOfContents: { minHeadingLevel: 2, maxHeadingLevel: 4 },
 			social: [
 				{
