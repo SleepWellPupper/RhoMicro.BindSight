@@ -22,7 +22,7 @@ jobs:
         with:
           dotnet-version: '9.x.x'
       - name: Generate reference documentation
-        run: dotnet run -c Release
+        run: dotnet run
         working-directory: docs/ReferenceGenerator
       - name: Install, build, and upload your site
         uses: withastro/action@v4
