@@ -47,12 +47,6 @@ import { Card, CardGrid } from '@astrojs/starlight/components';
 			.AddJsonSchemata();
 		```
 	</Card>
-	<Card title="Extensible Modular Architecture" icon="puzzle">
-		Replace, extend, disable any behavior via DI, like the service providing the options to document:
-		```cs
-		services.AddSingleton<IBindSightGeneratorOptionsProvider, CustomOptionsProvider>()
-		```
-	</Card>
 	<Card title="Built with Dependency Injection, for Dependency Injection" icon="star">
 		All setup is done via DI, integrating natively into any dotnet application using the options pattern to bind configuration sources.
 		The service collection targeted by our extensions will be analyzed for options pattern registrations that are bound against configuration sources.
