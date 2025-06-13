@@ -496,3 +496,6 @@ fabric.properties
 # End of https://www.toptal.com/developers/gitignore/api/dotnetcore,rider,csharp,docfx
 
 .DS_Store
+
+docs/site/src/content/docs/reference/
+!docs/site/src/content/docs/reference/overview.md
