@@ -7,7 +7,7 @@ static class DocumentationModelExtensions
     public static String GetMarkdownString(
         this TypeDocumentationModel model,
         AstroReferencePathsContext references,
-        Int32 depth = 5)
+        Int32 depth = 6)
     {
         var builder = new StringBuilder();
         var visitor = new MarkdownStringVisitor(model.Type, builder, references, model.DocsContext, depth);
@@ -19,7 +19,7 @@ static class DocumentationModelExtensions
     public static String GetMarkdownString(
         this MemberDocumentationModel model,
         AstroReferencePathsContext references,
-        Int32 depth = 5)
+        Int32 depth = 6)
     {
         var builder = new StringBuilder();
         var visitor = new MarkdownStringVisitor(model.Symbol, builder, references, model.DocsContext, depth);

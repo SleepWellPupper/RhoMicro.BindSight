@@ -2,6 +2,7 @@ namespace ReferenceGenerator.Astro;
 
 using System.Text;
 using Microsoft.CodeAnalysis;
+using Microsoft.Extensions.Primitives;
 using XmlDocs;
 
 internal static class SymbolExtensions
@@ -82,6 +83,9 @@ internal static class SymbolExtensions
         }
     }
 
+    private static String GetExternalLinkIcon(String colorClass) =>
+        $"""<svg class="{colorClass}" style="display: inline-block; width: 1em; height: 1em;" viewbox="0 0 48 48"><path d="M36 24c-1.2 0-2 0.8-2 2v12c0 1.2-0.8 2-2 2h-22c-1.2 0-2-0.8-2-2v-22c0-1.2 0.8-2 2-2h12c1.2 0 2-0.8 2-2s-0.8-2-2-2h-12c-3.4 0-6 2.6-6 6v22c0 3.4 2.6 6 6 6h22c3.4 0 6-2.6 6-6v-12c0-1.2-0.8-2-2-2z"></path><path d="M43.8 5.2c-0.2-0.4-0.6-0.8-1-1-0.2-0.2-0.6-0.2-0.8-0.2h-12c-1.2 0-2 0.8-2 2s0.8 2 2 2h7.2l-18.6 18.6c-0.8 0.8-0.8 2 0 2.8 0.4 0.4 0.8 0.6 1.4 0.6s1-0.2 1.4-0.6l18.6-18.6v7.2c0 1.2 0.8 2 2 2s2-0.8 2-2v-12c0-0.2 0-0.6-0.2-0.8z"></path></svg>""";
+
     public static StringBuilder AppendMarkdownLink(
         this StringBuilder builder,
         ISymbol symbol,
@@ -89,6 +93,8 @@ internal static class SymbolExtensions
         AstroReferencePathsContext referencePaths,
         Boolean applyTypeClass = true)
     {
+        var summary = docsContext.Provider.GetMemberXmlDocs(symbol).Summary;
+
         var name = symbol.ToDisplayString(SymbolDisplayFormats.SimpleGenericName)
             .Replace("<", "&lt;")
             .Replace(">", "&gt;");
@@ -104,27 +110,43 @@ internal static class SymbolExtensions
                 _ => symbol
             };
 
-        var href = referencePaths.GetPaths(normalizedSymbol).AnchorHref.AsString;
+        var href = referencePaths.GetPaths(normalizedSymbol).AnchorHref is
+        {
+            IsExternal: false,
+        } nonExternal
+            ? nonExternal
+            : referencePaths.GetPaths(symbol).AnchorHref;
+
+        var @class = applyTypeClass
+            ? normalizedSymbol switch
+            {
+                INamedTypeSymbol t => t.TypeKind switch
+                {
+                    TypeKind.Interface => "cs-interface",
+                    TypeKind.Struct => "cs-struct",
+                    TypeKind.Class or TypeKind.Array or TypeKind.Delegate => "cs-class",
+                    TypeKind.Enum => "cs-enum",
+                    _ => "cs-member"
+                },
+                _ => "cs-member"
+            }
+            : String.Empty;
+
         builder.Append(@"<span title=""");
-        var titleBuilder = new StringBuilder();
-        docsContext.Provider.GetMemberXmlDocs(normalizedSymbol)
-            .Summary
-            .Accept(new HtmlTitleStringVisitor(titleBuilder, docsContext));
-        builder.Append(titleBuilder.ToString().Trim());
+        summary.Accept(new HtmlTitleStringVisitor(builder, docsContext));
         builder.Append(@"""><a");
 
-        if (applyTypeClass && normalizedSymbol switch
-            {
-                INamedTypeSymbol { TypeKind: TypeKind.Interface } => "cs-interface",
-                INamedTypeSymbol { TypeKind: TypeKind.Struct } => "cs-struct",
-                INamedTypeSymbol => "cs-class",
-                _ => null
-            } is { } @class)
-        {
-            builder.Append($" class=\"{@class}\"");
-        }
+        builder.Append($""" class="{@class}" href="{href.Value}" """);
 
-        builder.Append($""" href="{href}">{name}</a></span>""");
+        if (href.IsExternal)
+            builder.Append(" target=\"_blank\"");
+
+        builder.Append($">{name}");
+
+        if (href.IsExternal)
+            builder.Append(GetExternalLinkIcon(@class));
+
+        builder.Append("</a></span>");
 
         return builder;
     }

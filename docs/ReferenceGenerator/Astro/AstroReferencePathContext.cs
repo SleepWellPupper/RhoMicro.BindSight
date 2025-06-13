@@ -25,12 +25,8 @@ internal sealed class AstroReferencePathsContext(Compilation compilation, IAstro
 
     private AstroReferencePaths CreateExternalPaths(ISymbol symbol)
     {
-        var externalReferencePath = String.Format(
-            options.ExternalReferenceUrlFormat,
-            Uri.EscapeDataString(symbol.ToDisplayString(SymbolDisplayFormats.ExternalReferenceFormat)));
-
         var result = new AstroReferencePaths(
-            AnchorHref: externalReferencePath,
+            AnchorHref: AnchorHref.CreateExternal(symbol, options),
             AbsoluteFilePath: String.Empty,
             ContainingDirectory: String.Empty);
 

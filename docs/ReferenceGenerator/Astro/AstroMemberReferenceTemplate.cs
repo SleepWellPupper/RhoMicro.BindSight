@@ -4,7 +4,7 @@ using RhoMicro.CodeAnalysis;
 
 [Template(
     """
-    #### (:Header:)
+    ##### (:Header:)
 
     ```cs
     (:model.Signature:)
@@ -25,5 +25,5 @@ internal readonly partial struct AstroMemberReferenceTemplate(
             .Replace(">", "&gt;");
 
     private String Link =>
-        references.GetPaths(model.Symbol).AnchorHref.AsString;
+        references.GetPaths(model.Symbol).AnchorHref.Value;
 }

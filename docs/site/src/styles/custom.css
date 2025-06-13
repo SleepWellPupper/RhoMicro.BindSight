@@ -10,12 +10,30 @@
 
 .cs-class {
     color: #448d45;
+    stroke: #448d45;
+    fill: #448d45;
 }
 
-.cs-struct{
-    color:#447d8d;
+.cs-struct {
+    color: #08816b;
+    stroke: #08816b;
+    fill: #08816b;
 }
 
 .cs-interface {
     color: #c7a116;
+    stroke: #c7a116;
+    fill: #c7a116;
+}
+
+.cs-enum {
+    color: #c7a116;
+    stroke: #c7a116;
+    fill: #c7a116;
+}
+
+.cs-member {
+    color: #1686c7;
+    stroke: #1686c7;
+    fill: #1686c7;
 }

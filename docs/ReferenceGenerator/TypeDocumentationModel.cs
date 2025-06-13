@@ -36,16 +36,20 @@ internal sealed class TypeDocumentationModel(
                     .. type.GetMembers()
                         .Where(m =>
                         {
-                            // primary ctor or operator?
                             if (m is IMethodSymbol
+                                {
+                                    MethodKind: MethodKind.Constructor,
+                                    ContainingType.TypeKind: TypeKind.Enum
+                                })
+                                return false;
+                            if (!m.CanBeReferencedByName)
+                                return m is IMethodSymbol
                                 {
                                     MethodKind:
                                     MethodKind.Constructor or
                                     MethodKind.BuiltinOperator or
                                     MethodKind.UserDefinedOperator,
-                                    CanBeReferencedByName: false
-                                })
-                                return true;
+                                };
 
                             if (m is
                                 {

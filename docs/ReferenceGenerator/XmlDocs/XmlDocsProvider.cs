@@ -604,8 +604,8 @@ public sealed class XmlDocsProvider
         }
     }
 
-    public MemberElement GetXmlDocs(INamedTypeSymbol type) => GetMemberXmlDocs(type);
-    public MemberElement GetXmlDocs(IMethodSymbol method) => GetMemberXmlDocs(method);
+    public MemberElement GetXmlDocs(INamedTypeSymbol type) => GetMemberXmlDocs(type.ConstructedFrom);
+    public MemberElement GetXmlDocs(IMethodSymbol method) => GetMemberXmlDocs(method.ConstructedFrom);
     public MemberElement GetXmlDocs(IEventSymbol @event) => GetMemberXmlDocs(@event);
     public MemberElement GetXmlDocs(IFieldSymbol field) => GetMemberXmlDocs(field);
     public MemberElement GetXmlDocs(INamespaceSymbol @namespace) => GetMemberXmlDocs(@namespace);
@@ -613,7 +613,14 @@ public sealed class XmlDocsProvider
 
     public MemberElement GetMemberXmlDocs(ISymbol symbol)
     {
-        if (symbol.GetDocumentationCommentId() is not { } id)
+        var genericDefinition = symbol switch
+        {
+            INamedTypeSymbol t => t.ConstructedFrom,
+            IMethodSymbol m => m.ConstructedFrom,
+            _ => symbol
+        };
+
+        if (genericDefinition.GetDocumentationCommentId() is not { } id)
             return MemberElement.Empty;
 
         var result = _members.GetOrAdd(

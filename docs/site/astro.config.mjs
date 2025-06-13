@@ -10,14 +10,14 @@ const slugifyOptions = {
 	lowercase: true,
 	decamelize: false,
 	customReplacements: [
-		['<', '_'], 
+		['<', '_'],
 		['>', '_'],
 		['(', '_'],
 		[')', '_'],
-		['__', '_'],
 		[' ', '_'],
 		[',', ''],
-		['.','_']
+		['.', '_'],
+		['__','_']
 	],
 	preserveLeadingUnderscore: false,
 	preserveTrailingDash: false,
@@ -55,10 +55,10 @@ export default defineConfig({
 					label: 'Tutorials',
 					autogenerate: { directory: 'tutorials' },
 				},
-				{
-					label: 'Guides',
-					autogenerate: { directory: 'guides' },
-				},
+				// {
+				// 	label: 'Guides',
+				// 	autogenerate: { directory: 'guides' },
+				// },
 				{
 					label: 'Reference',
 					autogenerate: { directory: 'reference' },

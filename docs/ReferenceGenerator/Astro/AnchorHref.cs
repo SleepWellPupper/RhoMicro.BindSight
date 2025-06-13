@@ -4,12 +4,27 @@ using Microsoft.CodeAnalysis;
 using RhoMicro.CodeAnalysis;
 using RhoMicro.CodeAnalysis.Library.Text.Templating;
 
-[UnionType<String>(Options = UnionTypeOptions.None)]
-public readonly partial struct AnchorHref
+public record struct AnchorHref
 {
-    public static AnchorHref Empty => new(String.Empty);
+    private AnchorHref(String value, Boolean isExternal)
+    {
+        Value = value;
+        IsExternal = isExternal;
+    }
 
-    private static AnchorHref Create([UnionTypeFactory] String value) => new(value);
+    public String Value { get; }
+    public Boolean IsExternal { get; }
+
+    public static AnchorHref Empty => new(String.Empty, isExternal: false);
+
+    public static AnchorHref CreateExternal(ISymbol symbol, IAstroReferenceOptions options)
+    {
+        var value = String.Format(
+            options.ExternalReferenceUrlFormat,
+            Uri.EscapeDataString(symbol.ToDisplayString(SymbolDisplayFormats.ExternalReferenceFormat)));
+
+        return new AnchorHref(value, isExternal: true);
+    }
 
     public static AnchorHref Create(ISymbol symbol, IAstroReferenceOptions options)
     {
@@ -38,7 +53,7 @@ public readonly partial struct AnchorHref
 
         var value = buffer.ToString();
 
-        return new AnchorHref(value);
+        return new AnchorHref(value, isExternal: false);
     }
 
     public static AnchorHref CreateForEvent(IEventSymbol @event, IAstroReferenceOptions options)
@@ -55,7 +70,7 @@ public readonly partial struct AnchorHref
 
         var value = buffer.ToString();
 
-        return new AnchorHref(value);
+        return new AnchorHref(value, isExternal: false);
     }
 
     public static AnchorHref CreateForProperty(IPropertySymbol property, IAstroReferenceOptions options)
@@ -72,7 +87,7 @@ public readonly partial struct AnchorHref
 
         var value = buffer.ToString();
 
-        return new AnchorHref(value);
+        return new AnchorHref(value, isExternal: false);
     }
 
     public static AnchorHref CreateForMethod(IMethodSymbol method, IAstroReferenceOptions options)
@@ -89,7 +104,7 @@ public readonly partial struct AnchorHref
 
         var value = buffer.ToString();
 
-        return new AnchorHref(value);
+        return new AnchorHref(value, isExternal: false);
     }
 
     private static void AppendMethod(
@@ -156,7 +171,7 @@ public readonly partial struct AnchorHref
 
         var value = buffer.ToString();
 
-        return new AnchorHref(value);
+        return new AnchorHref(value, isExternal: false);
     }
 
     private static void AppendType(
