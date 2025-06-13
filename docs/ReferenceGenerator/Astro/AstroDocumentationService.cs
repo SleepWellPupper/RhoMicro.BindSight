@@ -67,7 +67,7 @@ public class AstroDocumentationService(
         ct.ThrowIfCancellationRequested();
 
         var paths = referencePaths.GetPaths(model.Type);
-        LoggerExtensions.LogInformation(logger, "Creating astro file '{FilePath}'.", paths.AbsoluteFilePath);
+        LoggerExtensions.LogInformation(logger, "Creating astro file '{FilePath}'.", paths.AbsoluteFilePath.AsString);
 
         if (options.DryRun)
             return;

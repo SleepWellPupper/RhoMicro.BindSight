@@ -7,7 +7,7 @@ using RhoMicro.CodeAnalysis.Library.Text.Templating;
 [UnionType<String>(Options = UnionTypeOptions.None)]
 public readonly partial struct AbsoluteFilePath
 {
-    public static AbsoluteFilePath Empty => new(String.Empty);
+    public static AbsoluteFilePath Empty => new AbsoluteFilePath(String.Empty);
 
     private static AbsoluteFilePath Create([UnionTypeFactory] String value) => new(value);
 
@@ -25,7 +25,7 @@ public readonly partial struct AbsoluteFilePath
 
         var value = buffer.ToString();
 
-        return new AbsoluteFilePath(value);
+        return Create(value);
     }
 
     private static void AppendType(
