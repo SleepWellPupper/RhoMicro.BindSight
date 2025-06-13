@@ -19,9 +19,17 @@ public record struct AnchorHref
 
     public static AnchorHref CreateExternal(ISymbol symbol, IAstroReferenceOptions options)
     {
+        var normalizedSymbol = symbol switch
+        {
+            INamedTypeSymbol t => t.ConstructedFrom,
+            IMethodSymbol m => m.ConstructedFrom,
+            _ => symbol
+        };
+
         var value = String.Format(
             options.ExternalReferenceUrlFormat,
-            Uri.EscapeDataString(symbol.ToDisplayString(SymbolDisplayFormats.ExternalReferenceFormat)));
+            Uri.EscapeDataString(
+                normalizedSymbol.ToDisplayString(SymbolDisplayFormats.ExternalReferenceFormat)));
 
         return new AnchorHref(value, isExternal: true);
     }

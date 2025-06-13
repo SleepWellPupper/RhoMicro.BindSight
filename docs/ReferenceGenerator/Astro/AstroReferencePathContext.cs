@@ -17,14 +17,25 @@ internal sealed class AstroReferencePathsContext(
     public AstroReferencePaths GetPaths(ISymbol symbol) => _paths.GetOrAdd(symbol, CreatePaths);
 
     private AstroReferencePaths CreatePaths(ISymbol symbol) =>
-        SymbolEqualityComparer.Default.Equals(symbol.ContainingAssembly, compilation.Assembly)
-            ? symbol is INamedTypeSymbol
-            {
-                DeclaredAccessibility: Accessibility.Public
-            } type
-                ? CreateTypePaths(type)
-                : CreateMemberPaths(symbol)
-            : CreateExternalPaths(symbol);
+        IsExternal(symbol)
+            ? CreateExternalPaths(symbol)
+            : symbol.DeclaredAccessibility is not Accessibility.Public
+                ? AstroReferencePaths.Empty
+                : symbol is INamedTypeSymbol type
+                    ? CreateTypePaths(type)
+                    : CreateMemberPaths(symbol);
+
+    private Boolean IsExternal(ISymbol symbol)
+    {
+        if (!SymbolEqualityComparer.Default.Equals(symbol.ContainingAssembly, compilation.Assembly))
+            return true;
+
+        var @namespace = symbol.ContainingNamespace.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat);
+        if (@namespace.StartsWith("Microsoft") || @namespace.StartsWith("System"))
+            return true;
+
+        return false;
+    }
 
     private AstroReferencePaths CreateExternalPaths(ISymbol symbol)
     {

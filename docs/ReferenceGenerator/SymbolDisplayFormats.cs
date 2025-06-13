@@ -5,14 +5,12 @@ using Microsoft.CodeAnalysis;
 internal static class SymbolDisplayFormats
 {
     public static SymbolDisplayFormat FullyQualifiedGlobalNamespaceOmitted { get; } =
-        SymbolDisplayFormat.FullyQualifiedFormat.WithGlobalNamespaceStyle(SymbolDisplayGlobalNamespaceStyle.Omitted);
+        SymbolDisplayFormat.FullyQualifiedFormat
+            .WithGlobalNamespaceStyle(SymbolDisplayGlobalNamespaceStyle.Omitted);
 
     public static SymbolDisplayFormat FullyQualifiedNamespaceOmitted { get; } =
         new(typeQualificationStyle: SymbolDisplayTypeQualificationStyle.NameAndContainingTypes,
             genericsOptions: SymbolDisplayGenericsOptions.IncludeTypeParameters);
-
-    public static SymbolDisplayFormat Constraints { get; } =
-        new(genericsOptions: SymbolDisplayGenericsOptions.IncludeTypeConstraints);
 
     public static SymbolDisplayFormat HeaderSignature { get; } =
         new(genericsOptions: SymbolDisplayGenericsOptions.IncludeTypeParameters,
@@ -66,6 +64,9 @@ internal static class SymbolDisplayFormats
             delegateStyle: SymbolDisplayDelegateStyle.NameOnly);
 
     public static SymbolDisplayFormat ExternalReferenceFormat { get; } =
-        FullyQualifiedGlobalNamespaceOmitted.WithMemberOptions(
-            SymbolDisplayMemberOptions.IncludeContainingType);
+        FullyQualifiedGlobalNamespaceOmitted
+            .WithMemberOptions(SymbolDisplayMemberOptions.IncludeContainingType)
+            .WithMiscellaneousOptions(
+                SymbolDisplayMiscellaneousOptions.ExpandValueTuple |
+                SymbolDisplayMiscellaneousOptions.ExpandNullable);
 }
