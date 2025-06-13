@@ -26,7 +26,7 @@ const slugifyOptions = {
 
 // https://astro.build/config
 export default defineConfig({
-	site: 'https://docs.rhomicro.com',
+	site: 'https://bindsight.rhomicro.com',
 	markdown: {
 		rehypePlugins: [
 			[rehypeSlugify, {
