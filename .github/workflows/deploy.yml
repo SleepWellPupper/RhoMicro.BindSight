@@ -22,7 +22,7 @@ jobs:
         with:
           dotnet-version: '9.x.x'
       - name: Generate reference documentation
-        run: dotnet run --AstroReferenceOptions:RelativeReferencePathBase="RhoMicro.BindSight/reference/"
+        run: dotnet run --AstroReferenceOptions:RelativeReferencePathBase="https://sleepwellpupper.github.io/RhoMicro.BindSight/reference/"
         working-directory: docs/ReferenceGenerator
       - name: Install, build, and upload your site
         uses: withastro/action@v4
