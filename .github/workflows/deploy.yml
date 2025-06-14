@@ -13,8 +13,6 @@ permissions:
 jobs:
   build:
     runs-on: ubunutu-latest
-    outputs: 
-      nuget-push-exit-code: ${{ steps.nuget-push.outputs.exit-code }}
     steps:
       - name: checkout repository
         uses: actions/checkout@v4
