@@ -13,14 +13,16 @@ permissions:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: macos-15
     steps:
       - name: Checkout your repository using git
         uses: actions/checkout@v4
       - name: Set up dotnet
         uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: '9.x.x'
+          dotnet-version: '10.0.100-preview.5.25277.114'
+      - name: Restore projects
+        run: dotnet restore
       - name: Run reference documentation tests
         run: dotnet test
         working-directory: tests/ReferenceGenerator.Tests
