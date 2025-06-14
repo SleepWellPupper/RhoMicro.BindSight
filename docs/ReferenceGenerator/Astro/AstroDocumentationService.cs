@@ -21,6 +21,19 @@ internal class AstroDocumentationService(
         if (compilation is null)
             return;
 
+        if (compilation.GetDiagnostics(ct)
+                .Where(d => d is
+                    {
+                        Severity: DiagnosticSeverity.Error
+                    } or
+                    {
+                        IsWarningAsError: true
+                    }).ToList() is [_, ..] errors)
+        {
+            logger.LogError("Encountered errors while compiling:\n{Errors}", String.Join("\n", errors));
+            return;
+        }
+
         var docsContext = XmlDocsContext.Create(compilation, ct);
         var referencePaths = new AstroReferencePathsContext(compilation, options, pathsLogger);
 
