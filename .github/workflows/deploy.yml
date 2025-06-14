@@ -14,7 +14,8 @@ permissions:
 jobs:
   build:
     runs-on: macos-15
-    outputs: ${{ steps.nuget-push.outputs.exit-code }}
+    outputs: 
+      nuget-push-exit-code: ${{ steps.nuget-push.outputs.exit-code }}
     steps:
       - name: checkout repository
         uses: actions/checkout@v4
