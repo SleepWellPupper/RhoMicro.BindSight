@@ -27,10 +27,14 @@ internal sealed class AstroReferencePathsContext(
 
     private Boolean IsExternal(ISymbol symbol)
     {
-        if (getRootNamespace(symbol.ContainingNamespace) is "Microsoft" or "System")
-            return true;
+        var rootNamespace = getRootNamespace(symbol.ContainingNamespace);
+        if (rootNamespace is "RhoMicro")
+            return false;
 
         if (!SymbolEqualityComparer.Default.Equals(symbol.ContainingAssembly, compilation.Assembly))
+            return true;
+
+        if (rootNamespace is "Microsoft" or "System")
             return true;
 
         return false;
