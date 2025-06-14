@@ -113,15 +113,16 @@ To do this, we will follow the following steps:
 
 ## Integrating BindSight
 
-1. Replace the options binding
-    ```cs
-    services.AddOptions<TutorialOptions>().BindConfiguration("Tutorial");
-    ```
+Replace the options binding
+```cs
+services.AddOptions<TutorialOptions>().BindConfiguration("Tutorial");
+```
 
-    with the following:
-    ```cs
-    services.AddDocumentedOptions<TutorialOptions>("Tutorial");
-    ```
+with the following:
+
+```cs
+services.AddDocumentedOptions<TutorialOptions>("Tutorial");
+```
 
 ## Generating Documentation
 
