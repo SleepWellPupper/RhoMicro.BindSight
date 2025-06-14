@@ -22,6 +22,8 @@ class DotnetWatch(ILogger<DotnetWatch> logger) : BackgroundService
 {
     protected override async Task ExecuteAsync(CancellationToken ct)
     {
+        ct.ThrowIfCancellationRequested();
+
         using var process = new Process();
 
         process.StartInfo.FileName = "dotnet";
@@ -40,6 +42,18 @@ class DotnetWatch(ILogger<DotnetWatch> logger) : BackgroundService
         process.BeginErrorReadLine();
         process.BeginOutputReadLine();
 
+        ct.Register(() =>
+        {
+            try
+            {
+                process.Kill(true);
+            }
+            catch (Exception ex)
+            {
+                logger.LogError(ex, "Error while killing process.");
+            }
+        });
+
         await process.WaitForExitAsync(ct);
     }
 }
@@ -49,6 +63,8 @@ class NpmRun(ILogger<NpmRun> logger) : BackgroundService
 {
     protected override async Task ExecuteAsync(CancellationToken ct)
     {
+        ct.ThrowIfCancellationRequested();
+
         using var process = new Process();
 
         process.StartInfo.FileName = "npm";
@@ -66,6 +82,18 @@ class NpmRun(ILogger<NpmRun> logger) : BackgroundService
 
         process.BeginErrorReadLine();
         process.BeginOutputReadLine();
+
+        ct.Register(() =>
+        {
+            try
+            {
+                process.Kill(true);
+            }
+            catch (Exception ex)
+            {
+                logger.LogError(ex, "Error while killing process.");
+            }
+        });
 
         await process.WaitForExitAsync(ct);
     }
