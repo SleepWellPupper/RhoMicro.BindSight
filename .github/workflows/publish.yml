@@ -2,7 +2,7 @@ name: deploy
 
 on:
   push:
-    branches: [ master ]
+    branches: [ publish ]
   workflow_dispatch: 
 
 permissions:
@@ -39,7 +39,7 @@ jobs:
           # node-version: 20 # The specific version of Node that should be used to build your site. Defaults to 20. (optional)
           # package-manager: pnpm@latest # The Node package manager that should be used to install dependencies and build yoursite. Automatically detected based on your lockfile. (optional)
       
-  deploy:
+  publish:
     needs: build
     runs-on: ubuntu-latest
     environment:
