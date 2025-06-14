@@ -9,7 +9,7 @@ using System.Reflection;
 /// The type to provide binding behavior rules for.
 /// </param>
 /// <param name="boundPropertiesAccessor">
-/// The accessor providing access tto the properties of <paramref name="type"/>
+/// The accessor providing access to the properties of <paramref name="type"/>
 /// that are bound.
 /// </param>
 /// <param name="boundGenericArgumentsAccessor">
