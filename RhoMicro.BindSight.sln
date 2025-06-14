@@ -12,7 +12,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReferenceGenerator.Tests", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RoslynNreRepro", "tests\RoslynNreRepro\RoslynNreRepro.csproj", "{88EB9A6B-36CC-4ADD-AECA-510AD87C2DBF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RoslynNreRepoTarget", "tests\RoslynNreRepoTarget\RoslynNreRepoTarget.csproj", "{79E018C8-E113-4F45-9651-7E33526C704B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RoslynNreReproTarget", "tests\RoslynNreReproTarget\RoslynNreReproTarget.csproj", "{79E018C8-E113-4F45-9651-7E33526C704B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
