@@ -28,16 +28,20 @@ internal sealed class AstroReferencePathsContext(
     private Boolean IsExternal(ISymbol symbol)
     {
         var rootNamespace = getRootNamespace(symbol.ContainingNamespace);
-        if (rootNamespace is "RhoMicro")
-            return false;
+        var isExternal = rootNamespace is not "RhoMicro"
+                         || rootNamespace is "Microsoft" or "System"
+                         || !SymbolEqualityComparer.Default.Equals(symbol.ContainingAssembly, compilation.Assembly);
 
-        if (!SymbolEqualityComparer.Default.Equals(symbol.ContainingAssembly, compilation.Assembly))
-            return true;
+        if (isExternal)
+            logger.LogInformation(
+                "external: '{Symbol}'",
+                symbol.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat));
+        else
+            logger.LogInformation(
+                "internal: '{Symbol}'",
+                symbol.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat));
 
-        if (rootNamespace is "Microsoft" or "System")
-            return true;
-
-        return false;
+        return isExternal;
 
         String getRootNamespace(INamespaceSymbol @namespace)
         {
@@ -58,11 +62,6 @@ internal sealed class AstroReferencePathsContext(
             AnchorHref: AnchorHref.CreateExternal(symbol, options),
             AbsoluteFilePath: String.Empty,
             ContainingDirectory: String.Empty);
-
-        logger.LogInformation(
-            "Created external href path '{Href}' for '{Symbol}'.",
-            result.AnchorHref.Value,
-            symbol.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat));
 
         return result;
     }
