@@ -33,7 +33,9 @@ jobs:
         working-directory: docs/ReferenceGenerator
       - name: nuget push
         id: nuget-push
-        run: dotnet nuget push project --api-key ${{ secrets.NUGET_KEY }} --source https://api.nuget.org/v3/index.json; echo "exit-code=$?" >> $GITHUB_OUTPUT
+        run: |
+          dotnet nuget push project --api-key ${{ secrets.NUGET_KEY }} --source https://api.nuget.org/v3/index.json
+          echo "exit-code=$?" >> $GITHUB_OUTPUT
       - name: build docs site
         if: ${{ steps.nuget-push.outputs.exit-code == '0' }}
         uses: withastro/action@v4
