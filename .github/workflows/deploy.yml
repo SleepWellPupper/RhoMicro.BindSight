@@ -33,9 +33,7 @@ jobs:
         working-directory: docs/ReferenceGenerator
       - name: nuget push
         id: nuget-push
-        run: |
-          dotnet nuget push src/RhoMicro.BindSight/RhoMicro.BindSight.csproj --api-key ${{ secrets.NUGET_KEY }} --source https://api.nuget.org/v3/index.json || true
-          echo "exit-code=$?" >> $GITHUB_OUTPUT
+        run: echo "exit-code=$(dotnet nuget push src/RhoMicro.BindSight/RhoMicro.BindSight.csproj --api-key ${{ secrets.NUGET_KEY }} --source https://api.nuget.org/v3/index.json)" >> $GITHUB_OUTPUT
       - name: build docs site
         if: ${{ steps.nuget-push.outputs.exit-code == '0' }}
         uses: withastro/action@v4
