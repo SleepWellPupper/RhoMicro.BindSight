@@ -11,7 +11,7 @@ permissions:
 
 jobs:
   build:
-    runs-on: macos-15
+    runs-on: ubunutu-latest
     outputs: 
       nuget-push-exit-code: ${{ steps.nuget-push.outputs.exit-code }}
     steps:
@@ -23,20 +23,18 @@ jobs:
           dotnet-version: '9.x.x'
       - name: restore projects
         run: dotnet restore
-      - name: test reference documentation generator
+      - name: run tests
         run: dotnet test
-        working-directory: tests/ReferenceGenerator.Tests
-      - name: run reference documentation generator
-        run: dotnet run -c Debug --AstroReferenceOptions:RelativeReferencePathBase="https://bindsight.rhomicro.com/reference/"
+      - name: generate reference documentation
+        run: dotnet run --AstroReferenceOptions:RelativeReferencePathBase="https://bindsight.rhomicro.com/reference/"
         working-directory: docs/ReferenceGenerator
-      - name: nuget push
+      - name: push nuget package
         id: nuget-push
-        run: echo "exit-code=$(dotnet nuget push src/RhoMicro.BindSight/RhoMicro.BindSight.csproj --api-key ${{ secrets.NUGET_KEY }} --source https://api.nuget.org/v3/index.json)" >> $GITHUB_OUTPUT
+        run: dotnet nuget push src/**/*.nupkg --api-key ${{ secrets.NUGET_KEY }} --source https://api.nuget.org/v3/index.json
       - name: build docs site
-        if: ${{ steps.nuget-push.outputs.exit-code == '0' }}
         uses: withastro/action@v4
         with:
-          path: ./docs/site # The root location of your Astro project inside the repository. (optional)
+          path: ./docs/site
           # node-version: 20 # The specific version of Node that should be used to build your site. Defaults to 20. (optional)
           # package-manager: pnpm@latest # The Node package manager that should be used to install dependencies and build yoursite. Automatically detected based on your lockfile. (optional)
       
