@@ -22,6 +22,8 @@ jobs:
           dotnet-version: '9.x.x'
       - name: restore projects
         run: dotnet restore
+      - name: build projects
+        run: dotnet build
       - name: run tests
         run: dotnet test
       - name: generate reference documentation
