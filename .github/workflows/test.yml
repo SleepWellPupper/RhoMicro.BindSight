@@ -1,0 +1,21 @@
+name: test
+
+on: [push]
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout repository
+        uses: actions/checkout@v4
+      - name: set up dotnet
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '9.x.x'
+      - name: restore projects
+        run: dotnet restore
+      - name: test reference documentation generator
+        run: dotnet test
