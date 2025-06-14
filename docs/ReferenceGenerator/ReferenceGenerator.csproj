@@ -28,4 +28,8 @@
     </PackageReference>
     <PackageReference Include="RhoMicro.HotterReload" Version="1.0.2"/>
   </ItemGroup>
+
+  <ItemGroup Condition="'$(DotNetWatchBuild)'=='true'">
+    <Watch Include="../../src/RhoMicro.BindSight/**/*.cs"/>
+  </ItemGroup>
 </Project>
