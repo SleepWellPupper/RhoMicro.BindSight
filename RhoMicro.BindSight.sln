@@ -12,8 +12,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReferenceGenerator.Tests", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RoslynNreRepro", "tests\RoslynNreRepro\RoslynNreRepro.csproj", "{88EB9A6B-36CC-4ADD-AECA-510AD87C2DBF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RoslynNreReproTarget", "tests\RoslynNreReproTarget\RoslynNreReproTarget.csproj", "{79E018C8-E113-4F45-9651-7E33526C704B}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -44,9 +42,5 @@ Global
 		{88EB9A6B-36CC-4ADD-AECA-510AD87C2DBF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{88EB9A6B-36CC-4ADD-AECA-510AD87C2DBF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{88EB9A6B-36CC-4ADD-AECA-510AD87C2DBF}.Release|Any CPU.Build.0 = Release|Any CPU
-		{79E018C8-E113-4F45-9651-7E33526C704B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{79E018C8-E113-4F45-9651-7E33526C704B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{79E018C8-E113-4F45-9651-7E33526C704B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{79E018C8-E113-4F45-9651-7E33526C704B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
