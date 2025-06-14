@@ -14,28 +14,36 @@ permissions:
 jobs:
   build:
     runs-on: macos-15
+    outputs: 
+      nuget-push-exit-code: ${{ steps.nuget-push.outputs.exit-code }}
     steps:
-      - name: Checkout your repository using git
+      - name: checkout repository
         uses: actions/checkout@v4
-      - name: Set up dotnet
+      - name: set up dotnet
         uses: actions/setup-dotnet@v4
         with:
           dotnet-version: '9.x.x'
-      - name: Restore projects
+      - name: restore projects
         run: dotnet restore
-      - name: Run reference documentation tests
+      - name: test reference documentation generator
         run: dotnet test
         working-directory: tests/ReferenceGenerator.Tests
-      - name: Generate reference documentation
+      - name: run reference documentation generator
         run: dotnet run -c Debug --AstroReferenceOptions:RelativeReferencePathBase="https://bindsight.rhomicro.com/reference/"
         working-directory: docs/ReferenceGenerator
-      - name: Install, build, and upload your site
+      - name: nuget push
+        id: nuget-push
+        run: |
+          dotnet nuget push project --api-key ${{ secrets.NUGET_KEY }} --source https://api.nuget.org/v3/index.json
+          echo "exit-code=$?" >> $GITHUB_OUTPUT
+      - name: build docs site
+        if: ${{ steps.nuget-push.outputs.exit-code == '0' }}
         uses: withastro/action@v4
         with:
           path: ./docs/site # The root location of your Astro project inside the repository. (optional)
           # node-version: 20 # The specific version of Node that should be used to build your site. Defaults to 20. (optional)
-          # package-manager: pnpm@latest # The Node package manager that should be used to install dependencies and build your site. Automatically detected based on your lockfile. (optional)
-
+          # package-manager: pnpm@latest # The Node package manager that should be used to install dependencies and build yoursite. Automatically detected based on your lockfile. (optional)
+      
   deploy:
     needs: build
     runs-on: ubuntu-latest
