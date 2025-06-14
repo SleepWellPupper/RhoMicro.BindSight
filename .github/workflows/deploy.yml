@@ -20,7 +20,7 @@ jobs:
       - name: Set up dotnet
         uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: '10.0.100-preview.5.25277.114'
+          dotnet-version: '9.x.x'
       - name: Restore projects
         run: dotnet restore
       - name: Run reference documentation tests
