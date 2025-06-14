@@ -27,10 +27,10 @@ internal sealed class AstroReferencePathsContext(
 
     private Boolean IsExternal(ISymbol symbol)
     {
-        // if (!SymbolEqualityComparer.Default.Equals(symbol.ContainingAssembly, compilation.Assembly))
-        //     return true;
-        //
         if (getRootNamespace(symbol.ContainingNamespace) is "Microsoft" or "System")
+            return true;
+
+        if (!SymbolEqualityComparer.Default.Equals(symbol.ContainingAssembly, compilation.Assembly))
             return true;
 
         return false;
@@ -72,11 +72,6 @@ internal sealed class AstroReferencePathsContext(
             ContainingDirectory: String.Empty,
             AnchorHref: anchorHref);
 
-        logger.LogInformation(
-            "Created member href path '{Href}' for '{Symbol}'.",
-            result.AnchorHref.Value,
-            symbol.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat));
-
         return result;
     }
 
@@ -98,11 +93,6 @@ internal sealed class AstroReferencePathsContext(
             AbsoluteFilePath: absoluteFilePath,
             ContainingDirectory: containingDirectory,
             AnchorHref: anchorHref);
-
-        logger.LogInformation(
-            "Created type href path '{Href}' for '{Symbol}'.",
-            result.AnchorHref.Value,
-            type.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat));
 
         return result;
     }
