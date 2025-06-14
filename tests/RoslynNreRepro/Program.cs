@@ -26,6 +26,7 @@ internal class AstroDocumentationService
 
     private async Task<Project> GetProject()
     {
+        Console.WriteLine(Environment.CurrentDirectory);
         var workspace = MSBuildWorkspace.Create();
         var project = await workspace.OpenProjectAsync("../../../../../src/RhoMicro.BindSight/RhoMicro.BindSight.csproj");
         return project;
