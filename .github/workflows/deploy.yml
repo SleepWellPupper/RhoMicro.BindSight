@@ -21,6 +21,8 @@ jobs:
         uses: actions/setup-dotnet@v4
         with:
           dotnet-version: '9.x.x'
+      - name: Restore projects
+        run: dotnet restore
       - name: Run reference documentation tests
         run: dotnet test
         working-directory: tests/ReferenceGenerator.Tests
