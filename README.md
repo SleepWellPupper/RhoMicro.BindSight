@@ -2,6 +2,8 @@
 
 ## TODO
 
+- roslyn bug (NRE in ubuntu)
+
 - nuget
 
 - json schema generator should emit for model instead of root type
