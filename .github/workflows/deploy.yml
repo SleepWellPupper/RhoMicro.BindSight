@@ -34,7 +34,7 @@ jobs:
       - name: nuget push
         id: nuget-push
         run: |
-          dotnet nuget push project --api-key ${{ secrets.NUGET_KEY }} --source https://api.nuget.org/v3/index.json
+          dotnet nuget push src/RhoMicro.BindSight/RhoMicro.BindSight.csproj --api-key ${{ secrets.NUGET_KEY }} --source https://api.nuget.org/v3/index.json || true
           echo "exit-code=$?" >> $GITHUB_OUTPUT
       - name: build docs site
         if: ${{ steps.nuget-push.outputs.exit-code == '0' }}
