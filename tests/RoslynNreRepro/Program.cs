@@ -27,7 +27,7 @@ internal class AstroDocumentationService
     private async Task<Project> GetProject()
     {
         var workspace = MSBuildWorkspace.Create();
-        var project = await workspace.OpenProjectAsync("../../src/RhoMicro.BindSight/RhoMicro.BindSight.csproj");
+        var project = await workspace.OpenProjectAsync("../RoslynNreReproTarget/RoslynNreReproTarget.csproj");
         return project;
     }
 }
