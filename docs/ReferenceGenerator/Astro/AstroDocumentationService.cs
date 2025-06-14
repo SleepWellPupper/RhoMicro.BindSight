@@ -7,6 +7,7 @@ using RhoMicro.CodeAnalysis.Library.Text.Templating;
 
 internal class AstroDocumentationService(
     IAstroReferenceOptions options,
+    ApplicationLifetime lifetime,
     ILogger<AstroDocumentationService> logger,
     ILogger<AstroReferencePathsContext> pathsLogger)
 {
@@ -31,6 +32,7 @@ internal class AstroDocumentationService(
                     }).ToList() is [_, ..] errors)
         {
             logger.LogError("Encountered errors while compiling:\n{Errors}", String.Join("\n", errors));
+            lifetime.StopApplication(-1);
             return;
         }
 
