@@ -13,8 +13,9 @@
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <VersionPrefix>0.0.0</VersionPrefix>
     <VersionSuffix>rc3</VersionSuffix>
-    <PackageLicenseExpression>GPL-3.0-only</PackageLicenseExpression>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageReadmeFile>README.md</PackageReadmeFile>
+    <Authors>Paul Braetz</Authors>
   </PropertyGroup>
 
   <ItemGroup>
