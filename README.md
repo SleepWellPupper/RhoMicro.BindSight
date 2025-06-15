@@ -1,5 +1,17 @@
 # BindSight
 
+BindSight generates documentation for your [configuration](https://learn.microsoft.com/en-us/dotnet/core/extensions/configuration) bindings using the [options pattern](https://learn.microsoft.com/en-us/dotnet/core/extensions/options).
+
+## Installation
+
+```xml
+<PackageReference Include="RhoMicro.BindSight" Version="*"></PackageReference>
+```
+
+## Quick Start
+
+
+
 ## TODO
 
 - roslyn bug (NRE in ubuntu)
