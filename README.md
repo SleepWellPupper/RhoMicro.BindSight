@@ -4,6 +4,14 @@ BindSight generates documentation for your [configuration](https://learn.microso
 
 ## Installation
 
+Using the command line:
+
+```
+dotnet add package RhoMicro.BindSight
+```
+
+Using msbuild:
+
 ```xml
 <PackageReference Include="RhoMicro.BindSight" Version="*"></PackageReference>
 ```
@@ -13,6 +21,15 @@ BindSight generates documentation for your [configuration](https://learn.microso
 
 
 ## TODO
+
+- file about transformations
+- file about generators
+- file about enrichments
+
+- generate arbitrary mdx files
+- generate graphviz/plantuml diagrams
+
+- generated mdx file marker for directory cleaning
 
 - roslyn bug (NRE in ubuntu)
 

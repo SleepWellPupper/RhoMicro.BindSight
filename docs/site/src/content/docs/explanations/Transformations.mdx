@@ -1,0 +1,17 @@
+---
+title: On Transformations
+description: An explanation on the rationale and inner workings of transformations.
+---
+
+Options are detected and modeled based on heuristics and explicit definitions.
+As such, they usually need to be refined, filtered, enhanced and otherwise modified before being useful in generators.
+Transformations are the primary mechanism by which option models are modified.
+
+For example, the [AllowedBooleanValuesTransformation](/reference/rhomicrobindsighttransformations/allowedbooleanvaluestransformation/) is responsible for enriching option models with information on allowed boolean values.
+Transformations may also exclude options from generators, like the [ChildlessExclusionTransformation](/reference/rhomicrobindsighttransformations/childlessexclusiontransformation/), which filters any options that do not have any children (e.g.: properties).
+
+Transformations are collected into a [TransformationPipeline](/reference/rhomicrobindsighttransformations/transformationpipeline) and applied to option models in the defined order.
+The order of transformations may be defined accessing the [BindSightBuilder.TransformationPipeline](/reference/rhomicrobindsightservices/bindsightbuilder/#transformationpipeline).
+
+Transformations may be sidestepped or overridden by registering a custom implementation of [ITransformationsProvider](/reference/rhomicrobindsighttransformations/itransformationsprovider/).
+It is used when creating a transformation pipeline to be injected into the default [PipelinedBindSightGeneratorOptionsProvider](/reference/rhomicrobindsightgenerators/pipelinedbindsightgeneratoroptionsprovider/), which is responsible for generating the options to be fed into generators.
