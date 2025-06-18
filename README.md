@@ -1,6 +1,35 @@
 # BindSight
 
+BindSight generates documentation for your [configuration](https://learn.microsoft.com/en-us/dotnet/core/extensions/configuration) bindings using the [options pattern](https://learn.microsoft.com/en-us/dotnet/core/extensions/options).
+
+## Installation
+
+Using the command line:
+
+```
+dotnet add package RhoMicro.BindSight
+```
+
+Using msbuild:
+
+```xml
+<PackageReference Include="RhoMicro.BindSight" Version="*"></PackageReference>
+```
+
+## Quick Start
+
+
+
 ## TODO
+
+- file about transformations
+- file about generators
+- file about enrichments
+
+- generate arbitrary mdx files
+- generate graphviz/plantuml diagrams
+
+- generated mdx file marker for directory cleaning
 
 - roslyn bug (NRE in ubuntu)
 
