@@ -26,12 +26,12 @@ jobs:
         run: dotnet build
       - name: run tests
         run: dotnet test
-      - name: generate reference documentation
-        run: dotnet run --AstroReferenceOptions:RelativeReferencePathBase="https://bindsight.rhomicro.com/reference/"
-        working-directory: docs/ReferenceGenerator
       - name: push nuget packages
         id: nuget-push
         run: dotnet nuget push src/**/*.nupkg --skip-duplicate --api-key ${{ secrets.NUGET_KEY }} --source https://api.nuget.org/v3/index.json
+      - name: generate reference documentation
+        run: dotnet run --AstroReferenceOptions:RelativeReferencePathBase="https://bindsight.rhomicro.com/reference/"
+        working-directory: docs/ReferenceGenerator
       - name: build docs site
         uses: withastro/action@v4
         with:
