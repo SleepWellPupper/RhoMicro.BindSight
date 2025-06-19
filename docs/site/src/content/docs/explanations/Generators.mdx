@@ -3,4 +3,11 @@ title: On Generators
 description: An explanation on the rationale and inner workings of generators.
 ---
 
+Generators are responsible for generating output from option models.
+They are collected and run by the [BindSightGeneratorRunner](/reference/rhomicrobindsightgenerators/bindsightgeneratorrunner/).
+Generators must implement the [IBindSightGenerator](/reference/rhomicrobindsightgenerators/ibindsightgenerator/) interface.
 
+Generators are ran in parallel, so they should not depend on each others output.
+Generators may be registered via [BindSightBuilder.Generators](/reference/rhomicrobindsightservices/bindsightbuilder/#generators).
+
+Generators for generating json schemata and a readme file are provided.
