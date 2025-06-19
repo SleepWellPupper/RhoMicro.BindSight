@@ -37,6 +37,7 @@ await host.RunAsync();
 namespace RhoMicro.BindSight.ExploratoryTests
 {
     using System.Collections.Immutable;
+    using Generators;
     using RhoMicro.HotterReload;
     using Services;
 
