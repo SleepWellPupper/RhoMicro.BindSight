@@ -16,14 +16,12 @@ Using msbuild:
 <PackageReference Include="RhoMicro.BindSight" Version="*"></PackageReference>
 ```
 
-## Quick Start
+## Getting Started
 
-
+Check out the [documentation](https://bindsight.rhomicro.com/tutorials/walkthrough/) on how to get started.
 
 ## TODO
 
-- file about transformations
-- file about generators
 - file about enrichments
 
 - generate arbitrary mdx files
