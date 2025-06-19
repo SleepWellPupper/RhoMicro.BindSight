@@ -52,27 +52,3 @@ Check out the [documentation](https://bindsight.rhomicro.com/tutorials/walkthrou
 
 - add convenience methods for registering and configuring stuff like excluded children etc
 
-## Architecture
-
-- 5 main areas:
-    - Services
-    - Models
-    - Enrichments
-    - Transformations
-    - Generators
-
-### Services
-
-- responsible for integration of various components and services
-- provides top level integration point into DI via `ServiceCollectionExtensions.AddBindSight(this IServiceCollection)`
-
-### Models
-
-- models option registrations and their properties
-- create models via:
-    - `OptionsModel.Create(Type type, EnrichmentFactory enrichmentFactory, OptionsModelCreationOptions options)`
-    -
-
-### Enrichments
-
--
