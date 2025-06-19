@@ -1,5 +1,6 @@
 namespace RhoMicro.BindSight.Services;
 
+using Generators;
 using Microsoft.Extensions.Hosting;
 
 /// <summary>
@@ -19,7 +20,7 @@ public static class HostExtensions
     /// <returns>
     /// A task, which, upon completion, will contain information on whether the generators
     /// runner actually did run. The task will complete upon all generators having ran or
-    /// the runner exiting early due to <see cref="IBindSightRunnerOptions.ExitOnCancellation"/>.
+    /// the runner exiting early due to <see cref="Generators.IBindSightRunnerOptions.ExitOnCancellation"/>.
     /// </returns>
     public static Task<Boolean> RunBindSight(this IHost host, CancellationToken cancellationToken = default)
     {

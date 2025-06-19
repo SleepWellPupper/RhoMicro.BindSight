@@ -1,4 +1,4 @@
-namespace RhoMicro.BindSight.Services;
+namespace RhoMicro.BindSight.Generators;
 
 using System.ComponentModel;
 using RhoMicro.CodeAnalysis;
@@ -14,7 +14,7 @@ public partial interface IBindSightRunnerOptions
     /// </summary>
     [Description(
          "Sets the exit mode after running all options docs generators. The default is `ExitMode.Environment`."),
-     DefaultValueExpression("global::RhoMicro.BindSight.Services.ExitMode.Environment")]
+     DefaultValueExpression("global::RhoMicro.BindSight.Generators.ExitMode.Environment")]
     ExitMode ExitMode { get; }
 
     /// <summary>

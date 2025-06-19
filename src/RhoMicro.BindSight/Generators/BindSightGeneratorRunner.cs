@@ -1,4 +1,4 @@
-namespace RhoMicro.BindSight.Services;
+namespace RhoMicro.BindSight.Generators;
 
 using Generators;
 using Microsoft.Extensions.Hosting;

@@ -27,7 +27,7 @@ class DotnetWatch(ILogger<DotnetWatch> logger) : BackgroundService
         using var process = new Process();
 
         process.StartInfo.FileName = "dotnet";
-        process.StartInfo.Arguments = "watch --project ./ReferenceGenerator/ReferenceGenerator.csproj";
+        process.StartInfo.Arguments = "watch --no-hotreload --project ./ReferenceGenerator/ReferenceGenerator.csproj";
 
         process.StartInfo.UseShellExecute = false;
 
