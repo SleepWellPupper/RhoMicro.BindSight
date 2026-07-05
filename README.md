@@ -16,14 +16,12 @@ Using msbuild:
 <PackageReference Include="RhoMicro.BindSight" Version="*"></PackageReference>
 ```
 
-## Quick Start
+## Getting Started
 
-
+Check out the [documentation](https://bindsight.rhomicro.com/tutorials/walkthrough/) on how to get started.
 
 ## TODO
 
-- file about transformations
-- file about generators
 - file about enrichments
 
 - generate arbitrary mdx files
@@ -54,27 +52,3 @@ Using msbuild:
 
 - add convenience methods for registering and configuring stuff like excluded children etc
 
-## Architecture
-
-- 5 main areas:
-    - Services
-    - Models
-    - Enrichments
-    - Transformations
-    - Generators
-
-### Services
-
-- responsible for integration of various components and services
-- provides top level integration point into DI via `ServiceCollectionExtensions.AddBindSight(this IServiceCollection)`
-
-### Models
-
-- models option registrations and their properties
-- create models via:
-    - `OptionsModel.Create(Type type, EnrichmentFactory enrichmentFactory, OptionsModelCreationOptions options)`
-    -
-
-### Enrichments
-
--
