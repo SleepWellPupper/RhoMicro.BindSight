@@ -59,6 +59,31 @@ public static partial class ServiceCollectionExtensions
         return result;
     }
 
+    /// <summary>
+    /// Gets an options builder that forwards Configure calls for the
+    /// same <typeparamref name="TOptions"/> to the underlying service
+    /// collection. Documentation services for the options are
+    /// registered as well.
+    /// </summary>
+    /// <typeparam name="TOptions">
+    /// The options type to be configured.
+    /// </typeparam>
+    /// <param name="services">
+    /// The <see cref="IServiceCollection"/> to add the services to.
+    /// </param>
+    /// <param name="configureBinder">
+    /// Optional. Used to configure the <see cref="BinderOptions"/>.
+    /// </param>
+    /// <returns>
+    /// The <see cref="OptionsBuilder{TOptions}"/> so that configure calls can be chained in it.
+    /// </returns>
+    public static OptionsBuilder<TOptions> AddDocumentedOptions<TOptions>(
+        this IServiceCollection services,
+        Action<BinderOptions>? configureBinder = null)
+        where TOptions : class
+        => services.AddDocumentedOptions<TOptions>(
+            configSectionPath: Options.DefaultName,
+            configureBinder);
 
     /// <summary>
     /// Gets an options builder that forwards Configure calls for the
@@ -83,14 +108,14 @@ public static partial class ServiceCollectionExtensions
     /// </returns>
     public static OptionsBuilder<TOptions> AddDocumentedOptions<TOptions>(
         this IServiceCollection services,
-        String? configSectionPath = null,
+        String configSectionPath,
         Action<BinderOptions>? configureBinder = null)
         where TOptions : class
         => services.AddBindSight()
             .AddDefaults()
-            .TransformationPipeline.KeyReplacements.Use<TOptions>(configSectionPath ?? Options.DefaultName)
+            .TransformationPipeline.KeyReplacements.Use<TOptions>(configSectionPath)
             .BindSight.Services.AddOptions<TOptions>()
-            .BindConfiguration(configSectionPath ?? Options.DefaultName, configureBinder);
+            .BindConfiguration(configSectionPath, configureBinder);
 
     /// <summary>
     /// Gets an options builder that forwards Configure calls for the
@@ -119,13 +144,13 @@ public static partial class ServiceCollectionExtensions
     public static OptionsBuilder<TOptions> AddDocumentedOptions<TOptions>(
         this IServiceCollection services,
         String name,
-        String? configSectionPath = null,
+        String configSectionPath,
         Action<BinderOptions>? configureBinder = null)
         where TOptions : class
         => services
             .AddBindSight()
             .AddDefaults()
-            .TransformationPipeline.KeyReplacements.Use<TOptions>(configSectionPath ?? Options.DefaultName)
+            .TransformationPipeline.KeyReplacements.Use<TOptions>(configSectionPath)
             .BindSight.Services.AddOptions<TOptions>(name)
-            .BindConfiguration(configSectionPath ?? Options.DefaultName, configureBinder);
+            .BindConfiguration(configSectionPath, configureBinder);
 }
